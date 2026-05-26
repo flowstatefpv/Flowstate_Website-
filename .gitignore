@@ -1,0 +1,11 @@
+# Large video files — hosted on YouTube, not in repo
+*.mp4
+# Keep the hero background video (92MB, under GitHub's 100MB limit)
+!reel_compressed_cut_shorter.mp4
+
+# Dev/screenshot artifacts
+temporary screenshots/
+screenshot.mjs
+serve.mjs
+serve.ps1
+scroll-capture.html

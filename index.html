@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flowstate FPV — Cinematic Drone Videography</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Barlow+Condensed:wght@900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #07090E;
+      color: #E8ECF4;
+      overflow-x: hidden;
+    }
+
+    /* Grain texture */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50%       { opacity: 0.9; transform: scale(1.08); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-14px); }
+    }
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scroll-line {
+      0%   { transform: scaleY(0); transform-origin: top; }
+      50%  { transform: scaleY(1); transform-origin: top; }
+      51%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      backdrop-filter: blur(24px) saturate(1.5);
+      -webkit-backdrop-filter: blur(24px) saturate(1.5);
+      background: rgba(7, 9, 14, 0.82);
+      border-bottom: 1px solid rgba(255,255,255,0.055);
+    }
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .logo-img {
+      height: 46px;
+      width: auto;
+    }
+    .nav-links { display: flex; align-items: center; gap: 36px; }
+    .nav-link {
+      color: #7A8699;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-link:hover { color: #E8ECF4; }
+    .nav-link:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 4px; border-radius: 4px; }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1E7AAA;
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition:
+        transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.25s ease,
+        background 0.2s ease;
+      box-shadow:
+        0 6px 20px rgba(58, 195, 253, 0.18),
+        0 2px 6px rgba(58, 195, 253, 0.12);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      background: #2490C8;
+      box-shadow:
+        0 14px 36px rgba(58, 195, 253, 0.25),
+        0 4px 10px rgba(58, 195, 253, 0.18);
+    }
+    .btn-primary:active { transform: translateY(0) scale(0.99); }
+    .btn-primary:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 3px; }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: #C8D0DC;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.14);
+      cursor: pointer;
+      transition:
+        transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+        border-color 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease;
+    }
+    .btn-ghost:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,0.28);
+      background: rgba(255,255,255,0.05);
+      color: #E8ECF4;
+    }
+    .btn-ghost:active { transform: translateY(0); }
+    .btn-ghost:focus-visible { outline: 2px solid rgba(255,255,255,0.5); outline-offset: 3px; }
+
+    /* ── HERO ── */
+    .hero-section {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding-top: 72px;
+    }
+    .glow-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+    }
+    .glow-a { animation: pulse-glow 7s ease-in-out infinite 0s; }
+    .glow-b { animation: pulse-glow 9s ease-in-out infinite 2.5s; }
+    .glow-c { animation: pulse-glow 6s ease-in-out infinite 5s; }
+
+    /* ── SECTION LABELS ── */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #3AC3FD;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 2px;
+      background: #3AC3FD;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* ── HEADINGS ── */
+    .hero-h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(32px, 5vw, 64px);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+    }
+    .section-h2 {
+      font-size: clamp(30px, 4vw, 52px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+    }
+    .accent { color: #3AC3FD; }
+
+    /* ── SERVICE CARDS ── */
+    .service-card {
+      background: #0C0F18;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 36px;
+      position: relative;
+      overflow: hidden;
+      transition:
+        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(58,195,253,0.1) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(58,195,253,0.28);
+      box-shadow:
+        0 28px 56px rgba(0,0,0,0.4),
+        0 0 0 1px rgba(58,195,253,0.12),
+        0 0 80px rgba(58,195,253,0.08);
+    }
+    .service-card:hover::before { opacity: 1; }
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: rgba(58,195,253,0.12);
+      border: 1px solid rgba(58,195,253,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    /* ── PORTFOLIO ── */
+    .portfolio-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .portfolio-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
+      background: #0C0F18;
+    }
+    .portfolio-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .portfolio-item:hover img { transform: scale(1.07); }
+    .portfolio-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(7,9,14,0.88) 0%, rgba(7,9,14,0.2) 50%, transparent 100%);
+      opacity: 1;
+      display: flex;
+      align-items: flex-end;
+      padding: 22px;
+    }
+
+    /* ── STATS ── */
+    .stat-num {
+      font-size: clamp(40px, 5.5vw, 64px);
+      font-weight: 900;
+      color: #3AC3FD;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    /* ── FORM ── */
+    .form-input {
+      width: 100%;
+      background: rgba(255,255,255,0.038);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 15px 18px;
+      color: #E8ECF4;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .form-input::placeholder { color: #3A4455; }
+    .form-input:focus {
+      border-color: rgba(58, 195, 253, 0.5);
+      box-shadow: 0 0 0 3px rgba(58, 195, 253, 0.1);
+    }
+    select.form-input {
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7A95' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+    }
+
+    /* ── FOOTER ── */
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      gap: 48px;
+    }
+    .footer-link {
+      font-size: 14px;
+      color: #3A4455;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .footer-link:hover { color: #8899AA; }
+    .footer-link:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 2px; border-radius: 3px; }
+    .social-btn {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+    .social-btn:hover {
+      background: rgba(58,195,253,0.15);
+      border-color: rgba(58,195,253,0.3);
+      transform: translateY(-2px);
+    }
+    .social-btn:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 3px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .nav-inner { padding: 0 24px; }
+      .portfolio-grid { flex-direction: column; }
+      .about-grid { grid-template-columns: 1fr !important; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+
+      .footer-grid { grid-template-columns: 1fr; }
+      .hero-cta { flex-direction: column; align-items: stretch; }
+      .hero-cta .btn-primary,
+      .hero-cta .btn-ghost { justify-content: center; }
+      .contact-name-row { grid-template-columns: 1fr !important; }
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(58,195,253,0.25), transparent);
+      margin: 0;
+    }
+
+    /* ── LOGO CLOUD ── */
+    @keyframes logo-marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .logo-cloud-track {
+      display: flex;
+      width: max-content;
+      align-items: center;
+      gap: 42px;
+      animation: logo-marquee 80s linear infinite;
+      will-change: transform;
+    }
+    .logo-cloud-outer:hover .logo-cloud-track {
+      animation-duration: 25s;
+    }
+    .logo-cloud-img {
+      height: 28px;
+      width: auto;
+      pointer-events: none;
+      user-select: none;
+      filter: brightness(0) invert(1);
+      opacity: 0.8;
+      flex-shrink: 0;
+    }
+    @media (min-width: 768px) {
+      .logo-cloud-img { height: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════ NAV ═══════════════════════════════════════ -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#home" style="display:flex;align-items:center;text-decoration:none;flex-shrink:0;">
+        <img src="brand_assets/logo-v2.png" alt="Flowstate FPV" class="logo-img">
+      </a>
+
+      <div class="nav-links">
+        <a href="#about"     class="nav-link">About</a>
+        <a href="#services"  class="nav-link">Services</a>
+        <a href="#portfolio" class="nav-link">Portfolio</a>
+        <a href="#contact"   class="nav-link">Contact</a>
+      </div>
+
+      <a href="#contact" class="btn-primary" style="padding:11px 22px;font-size:12px;flex-shrink:0;">
+        Book a Shoot
+      </a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════ HERO ══════════════════════════════════════ -->
+  <section class="hero-section" id="home">
+    <!-- Reel video background -->
+    <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.39;pointer-events:none;">
+      <source src="reel_compressed_cut_shorter.mp4" type="video/mp4">
+    </video>
+    <!-- Dim overlay keeps hero text legible -->
+    <div style="position:absolute;inset:0;background:rgba(7,9,14,0.45);pointer-events:none;"></div>
+
+
+
+
+    <!-- Content -->
+    <div style="position:relative;z-index:10;text-align:center;padding:0 24px 60px;max-width:880px;margin:0 auto;">
+
+      <!-- Logo hero display -->
+      <div style="display:flex;justify-content:center;margin-bottom:40px;">
+        <img src="brand_assets/logo-v2.png" alt="Flowstate FPV"
+          class="logo-img"
+          style="height:clamp(60px,8vw,96px);width:auto;filter:drop-shadow(0 0 30px rgba(58,195,253,0.45));">
+      </div>
+
+      <div class="section-label" style="justify-content:center;margin-bottom:22px;">
+        Cinematic FPV Drone Videography
+      </div>
+
+      <h1 class="hero-h1" style="margin-bottom:21px;">
+        Capture What Others 
+        <span class="accent">Can't</span>
+      </h1>
+
+      <p style="font-size:clamp(15px,2vw,18px);color:#5E6E85;line-height:1.75;max-width:520px;margin:0 auto 48px;font-weight:500;">
+        Specialized FPV drone videography with full-service video and photography production. 
+      </p>
+
+      <div class="hero-cta" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+        <a href="#portfolio" class="btn-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          View Our Work
+        </a>
+        <a href="#contact" class="btn-ghost">Book a Session</a>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div style="margin-top:72px;display:flex;flex-direction:column;align-items:center;gap:10px;">
+        <span style="font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#2D3748;">Scroll</span>
+        <div style="width:1px;height:44px;background:linear-gradient(to bottom,rgba(58,195,253,0.7),transparent);animation:scroll-line 2.4s ease-in-out infinite;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ LOGO CLOUD ═══════════════════════════════════ -->
+  <section style="position:relative;padding:72px 0 56px;background:#07090E;overflow:hidden;">
+
+    <!-- Radial glow (matches demo.tsx bg element) -->
+    <div aria-hidden="true" style="position:absolute;top:-60%;left:50%;transform:translateX(-50%);width:120vmin;height:120vmin;border-radius:0 0 9999px 9999px;background:radial-gradient(ellipse at center,rgba(232,236,244,0.05) 0%,transparent 50%);filter:blur(30px);pointer-events:none;z-index:0;"></div>
+
+    <!-- Infinite marquee -->
+    <div class="logo-cloud-outer" style="overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent,black 12%,black 88%,transparent);mask-image:linear-gradient(to right,transparent,black 12%,black 88%,transparent);padding:24px 0;">
+      <div class="logo-cloud-track">
+        <!-- Set 1 -->
+        <img src="brand_assets/logos/cy_logo_reverse.png"                    alt="Courtyard by Marriott"   loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/aloft-logo-white.png"                   alt="Aloft"                   loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/FairFieldVanityLogo.png"                alt="Fairfield by Marriott"   loading="lazy" class="logo-cloud-img">
+        <img src="MXET_white_Xwide.png"                     alt="Texas A&M Engineering"   loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/Home2-Logo-White_HR.webp" style="height:62px;"               alt="Home2 Suites by Hilton"  loading="lazy" class="logo-cloud-img">
+        <img src="Embassy-Suites-Logo.png" style="height:62px;filter:grayscale(1) invert(1) brightness(5);mix-blend-mode:screen;"           alt="Embassy Suites by Hilton" loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/McAllen-City-Center-temp-w.png"         alt="McAllen City Center"     loading="lazy" class="logo-cloud-img" style="height:52px;">
+        <img src="brand_assets/logos/Ruby-Red-Logo.png"                      alt="Ruby Red Hospitality"    loading="lazy" class="logo-cloud-img" style="height:52px;">
+        <!-- Set 2 — duplicate for seamless loop -->
+        <img src="brand_assets/logos/cy_logo_reverse.png"                    alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/aloft-logo-white.png"                   alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/FairFieldVanityLogo.png"                alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+        <img src="MXET_white_Xwide.png"                     alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/Home2-Logo-White_HR.webp" style="height:52px;"               alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+        <img src="Embassy-Suites-Logo.png" style="height:62px;filter:grayscale(1) invert(1) brightness(5);mix-blend-mode:screen;"           alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/McAllen-City-Center-temp-w.png"         alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/Ruby-Red-Logo.png"                      alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+      </div>
+    </div>
+
+    <!-- bottom rule -->
+    <div style="height:1px;background:rgba(255,255,255,0.08);-webkit-mask-image:linear-gradient(to right,transparent,black,transparent);mask-image:linear-gradient(to right,transparent,black,transparent);"></div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════ SHOWREEL ═══════════════════════════════════ -->
+  <section style="padding:96px 24px;background:#07090E;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:52px;">
+        <div class="section-label" style="justify-content:center;margin-bottom:16px;">Our Reel</div>
+        <h2 class="section-h2">See the <span class="accent">Difference</span></h2>
+      </div>
+      <div style="border-radius:22px;overflow:hidden;background:#0C0F18;border:1px solid rgba(255,255,255,0.055);aspect-ratio:16/9;box-shadow:0 40px 80px rgba(0,0,0,0.55),0 0 120px rgba(58,195,253,0.1);">
+        <video controls style="width:100%;height:100%;object-fit:cover;display:block;">
+          <source src="reel_compressed_cut_shorter.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" style="max-width:1200px;margin:0 auto;"></div>
+
+  <!-- ═══════════════════════════════════════ SERVICES ══════════════════════════════════ -->
+  <section id="services" style="padding:96px 24px;background:#07090E;position:relative;overflow:hidden;">
+    <!-- Background glow -->
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(58,195,253,0.055) 0%,transparent 70%);pointer-events:none;"></div>
+
+    <div style="max-width:1200px;margin:0 auto;position:relative;">
+      <div style="text-align:center;margin-bottom:64px;">
+        <div class="section-label" style="justify-content:center;margin-bottom:16px;">What We Do</div>
+        <h2 class="section-h2" style="margin-bottom:18px;">Services Built for <span class="accent">Impact</span></h2>
+        <p style="font-size:16px;color:#5E6E85;line-height:1.75;max-width:440px;margin:0 auto;font-weight:500;">From property showcases to high-speed FPV action, we create content designed to capture attention and convert viewers.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;">
+
+        <!-- Aerial -->
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3AC3FD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="6" height="6" rx="1"/>
+              <line x1="9" y1="9" x2="4" y2="4"/><line x1="15" y1="9" x2="20" y2="4"/>
+              <line x1="9" y1="15" x2="4" y2="20"/><line x1="15" y1="15" x2="20" y2="20"/>
+              <circle cx="4" cy="4" r="2"/><circle cx="20" cy="4" r="2"/>
+              <circle cx="4" cy="20" r="2"/><circle cx="20" cy="20" r="2"/>
+            </svg>
+          </div>
+          <h3 style="font-size:19px;font-weight:800;letter-spacing:-0.02em;margin-bottom:12px;">FPV Videography</h3>
+          <p style="font-size:14px;color:#5E6E85;line-height:1.75;font-weight:500;">FPV shots delivering immersive perspectives only FPV drones can achieve. Built for commercials, events, real estate, and construction properties.</p>
+        </div>
+
+        <!-- Events -->
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3AC3FD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
+            </svg>
+          </div>
+          <h3 style="font-size:19px;font-weight:800;letter-spacing:-0.02em;margin-bottom:12px;">Property Photography</h3>
+          <p style="font-size:14px;color:#5E6E85;line-height:1.75;font-weight:500;">Professional aerial and ground photography for residential, commercial, and construction projects.</p>
+        </div>
+
+        <!-- Real Estate -->
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3AC3FD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </div>
+          <h3 style="font-size:19px;font-weight:800;letter-spacing:-0.02em;margin-bottom:12px;">Property Videography</h3>
+          <p style="font-size:14px;color:#5E6E85;line-height:1.75;font-weight:500;">High-quality ground and aerial videography for properties, real-estate, and construction.</p>
+        </div>
+
+        <!-- Commercial -->
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3AC3FD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+            </svg>
+          </div>
+          <h3 style="font-size:19px;font-weight:800;letter-spacing:-0.02em;margin-bottom:12px;">Content Packages</h3>
+          <p style="font-size:14px;color:#5E6E85;line-height:1.75;font-weight:500;">Custom bundled media solutions combining photo, video, and drone coverage tailored to your goals.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ PORTFOLIO ═════════════════════════════════ -->
+  <section id="portfolio" style="padding:96px 24px;background:#07090E;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="margin-bottom:56px;">
+        <div class="section-label" style="margin-bottom:16px;">Portfolio</div>
+        <h2 class="section-h2">Work <span class="accent">Highlights</span></h2>
+      </div>
+
+      <div class="portfolio-grid">
+
+        <!-- Row 1: MXET -->
+        <div class="portfolio-item" style="height:420px;cursor:pointer;" onclick="playYT(this,'407WMAbYRj4')">
+          <img src="https://img.youtube.com/vi/407WMAbYRj4/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          <div class="portfolio-overlay">
+            <div>
+              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Brand Campaign</p>
+              <p style="font-size:15px;font-weight:800;color:#E8ECF4;">Texas A&M Engineering</p>
+            </div>
+          </div>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+        </div>
+
+        <div class="portfolio-item" style="height:420px;cursor:pointer;" onclick="playYT(this,'sEXuRoqq7z4')">
+          <img src="https://img.youtube.com/vi/sEXuRoqq7z4/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          <div class="portfolio-overlay">
+            <div>
+              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Hotel Brand</p>
+              <p style="font-size:15px;font-weight:800;color:#E8ECF4;">Embassy Suites</p>
+            </div>
+          </div>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+        </div>
+
+        <div class="portfolio-item" style="height:420px;cursor:pointer;" onclick="playYT(this,'WuYW6dPaE8k')">
+          <img src="https://img.youtube.com/vi/WuYW6dPaE8k/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          <div class="portfolio-overlay">
+            <div>
+              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Property Showcase</p>
+              <p style="font-size:15px;font-weight:800;color:#E8ECF4;">South Texas Inspection Program</p>
+            </div>
+          </div>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+        </div>
+
+        <!-- Aloft + Home 2 -->
+        <div class="portfolio-item" style="height:420px;cursor:pointer;" onclick="playYT(this,'ghwI-8M4Oao')">
+          <img src="https://img.youtube.com/vi/ghwI-8M4Oao/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          <div class="portfolio-overlay">
+            <div>
+              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Hotel Brand</p>
+              <p style="font-size:15px;font-weight:800;color:#E8ECF4;">Aloft Hotel</p>
+            </div>
+          </div>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+        </div>
+
+        <div class="portfolio-item" style="height:420px;cursor:pointer;" onclick="playYT(this,'soWsWSmpi2U')">
+          <img src="https://img.youtube.com/vi/soWsWSmpi2U/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          <div class="portfolio-overlay">
+            <div>
+              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Hotel Brand</p>
+              <p style="font-size:15px;font-weight:800;color:#E8ECF4;">Home2 Suites</p>
+            </div>
+          </div>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+        </div>
+
+        <div class="portfolio-item" style="height:420px;cursor:pointer;" onclick="playYT(this,'_V8mftsZc9s')">
+          <img src="https://img.youtube.com/vi/_V8mftsZc9s/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          <div class="portfolio-overlay">
+            <div>
+              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Construction Project</p>
+              <p style="font-size:15px;font-weight:800;color:#E8ECF4;">SRS Building</p>
+            </div>
+          </div>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ STATS ═════════════════════════════════════ -->
+  <section style="padding:72px 24px;background:#0B0D16;border-top:1px solid rgba(255,255,255,0.045);border-bottom:1px solid rgba(255,255,255,0.045);">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:40px;text-align:center;">
+      <div>
+        <div class="stat-num">FAA</div>
+        <p style="font-size:11px;font-weight:700;color:#3A4A5A;margin-top:10px;letter-spacing:0.1em;text-transform:uppercase;">Part 107 Certified</p>
+      </div>
+      <div>
+        <div class="stat-num">TX</div>
+        <p style="font-size:11px;font-weight:700;color:#3A4A5A;margin-top:10px;letter-spacing:0.1em;text-transform:uppercase;">Texas Based, Serving Nationwide </p>
+      </div>
+      <div>
+        <div class="stat-num">8</div>
+        <p style="font-size:11px;font-weight:700;color:#3A4A5A;margin-top:10px;letter-spacing:0.1em;text-transform:uppercase;">Years of Piloting Experience</p>
+      </div>
+      <div>
+        <div class="stat-num">$1M</div>
+        <p style="font-size:11px;font-weight:700;color:#3A4A5A;margin-top:10px;letter-spacing:0.1em;text-transform:uppercase;">Insured</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ ABOUT ══════════════════════════════════════ -->
+  <section id="about" style="padding:72px 24px;background:#07090E;">
+    <div class="about-grid" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;">
+
+      <!-- Image side -->
+      <div style="position:relative;">
+        <div style="position:relative;border-radius:22px;overflow:hidden;height:400px;box-shadow:0 40px 80px rgba(0,0,0,0.5),0 0 80px rgba(58,195,253,0.09);">
+          <img src="Facetune_05-07-2025-01-07-27 (3).jpg" alt="FPV pilot in action" style="width:100%;height:100%;object-fit:cover;">
+          <!-- Gradient overlay -->
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(7,9,14,0.55) 0%,transparent 55%);"></div>
+          <!-- Color treatment layer -->
+          <div style="position:absolute;inset:0;background:rgba(58,195,253,0.08);mix-blend-mode:multiply;"></div>
+        </div>
+
+
+        <!-- Top-right decorative dot grid -->
+        <div style="position:absolute;top:-16px;right:-16px;width:80px;height:80px;background-image:radial-gradient(rgba(58,195,253,0.3) 1px,transparent 1px);background-size:10px 10px;pointer-events:none;"></div>
+      </div>
+
+      <!-- Text side -->
+      <div>
+        <div class="section-label" style="margin-bottom:20px;">About</div>
+        <h2 class="section-h2" style="margin-bottom:26px;">Meet the <span class="accent">Founder</span></h2>
+        <p style="font-size:16px;color:#5E6E85;line-height:1.8;font-weight:500;margin-bottom:18px;">
+          Flowstate FPV was founded by Erick Salazar, an  FPV pilot, engineer, and videographer specializing in creating FPV video and property content.
+        </p>
+        <p style="font-size:16px;color:#5E6E85;line-height:1.8;font-weight:500;margin-bottom:18px;">
+          With a years of hands on flying in FPV freestyle and racing, Erick translates technical piloting precision into cinematic visuals that help brands, properties, and commercial projects stand out.
+        </p>
+        <p style="font-size:16px;color:#5E6E85;line-height:1.8;font-weight:500;margin-bottom:36px;">
+          From high-speed FPV fly-throughs to polished property showcases, Flowstate FPV delivers content designed to make an impression.
+        </p>
+
+        <a href="#contact" class="btn-primary">Work With Us</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ CONTACT ═══════════════════════════════════ -->
+  <section id="contact" style="padding:112px 24px;background:#0B0D16;position:relative;overflow:hidden;">
+    <!-- Background glow -->
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(58,195,253,0.07) 0%,transparent 70%);pointer-events:none;"></div>
+
+    <div style="max-width:680px;margin:0 auto;position:relative;">
+      <div style="text-align:center;margin-bottom:60px;">
+        <div class="section-label" style="justify-content:center;margin-bottom:16px;">Get In Touch</div>
+        <h2 class="section-h2" style="margin-bottom:16px;">Let's <span class="accent">Create</span></h2>
+        <p style="font-size:16px;color:#5E6E85;line-height:1.75;font-weight:500;">Tell us about your project and we'll respond within 24 hours.</p>
+      </div>
+
+      <form style="display:flex;flex-direction:column;gap:14px;" onsubmit="return false;">
+        <div class="contact-name-row" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div>
+            <label style="display:block;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#3A4A5A;margin-bottom:8px;">First Name</label>
+            <input type="text" class="form-input" placeholder="John">
+          </div>
+          <div>
+            <label style="display:block;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#3A4A5A;margin-bottom:8px;">Last Name</label>
+            <input type="text" class="form-input" placeholder="Doe">
+          </div>
+        </div>
+
+        <div>
+          <label style="display:block;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#3A4A5A;margin-bottom:8px;">Email</label>
+          <input type="email" class="form-input" placeholder="john@example.com">
+        </div>
+
+
+        <div>
+          <label style="display:block;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#3A4A5A;margin-bottom:8px;">Tell Us About Your Project</label>
+          <textarea class="form-input" rows="5" placeholder="Describe your project, timeline, and any specific requirements…" style="resize:none;"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="justify-content:center;margin-top:6px;">
+          Send Message
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
+      </form>
+
+      <!-- Direct email -->
+      <div style="margin-top:16px;text-align:center;padding-top:16px;border-top:1px solid rgba(255,255,255,0.055);">
+        <p style="font-size:13px;color:#2D3A46;margin-bottom:12px;font-weight:500;">Or reach us directly</p>
+        <a href="mailto:erickflowstatefpv@gmail.com"
+          style="color:#3AC3FD;font-weight:700;font-size:16px;text-decoration:none;transition:color 0.2s ease;"
+          onmouseover="this.style.color='#52D4FF'" onmouseout="this.style.color='#3AC3FD'">
+          erickflowstatefpv@gmail.com
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ FOOTER ════════════════════════════════════ -->
+  <footer style="background:#07090E;border-top:1px solid rgba(255,255,255,0.045);padding:32px 24px;">
+    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+
+      <div style="display:flex;gap:10px;">
+        <a href="https://www.instagram.com/flowstatefpv" class="social-btn" aria-label="Instagram">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5E6E85" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="mailto:erickflowstatefpv@gmail.com" class="social-btn" aria-label="Email">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5E6E85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+        </a>
+      </div>
+
+      <p style="font-size:12px;color:#1E2836;font-weight:500;">© 2026 Flowstate FPV. All rights reserved.</p>
+    </div>
+  </footer>
+
+<script>
+  function playYT(el, id) {
+    el.onclick = null;
+    el.style.cursor = 'default';
+    el.innerHTML = '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+  }
+</script>
+</body>
+</html>
