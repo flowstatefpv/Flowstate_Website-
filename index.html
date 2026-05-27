@@ -769,27 +769,27 @@
         <p style="font-size:16px;color:#5E6E85;line-height:1.75;font-weight:500;">Tell us about your project and we'll respond within 24 hours.</p>
       </div>
 
-      <form style="display:flex;flex-direction:column;gap:14px;" onsubmit="return false;">
+      <form style="display:flex;flex-direction:column;gap:14px;" action="https://formspree.io/f/xnjrlono" method="POST">
         <div class="contact-name-row" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
           <div>
             <label style="display:block;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#3A4A5A;margin-bottom:8px;">First Name</label>
-            <input type="text" class="form-input" placeholder="John">
+            <input type="text" name="first_name" class="form-input" placeholder="John">
           </div>
           <div>
             <label style="display:block;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#3A4A5A;margin-bottom:8px;">Last Name</label>
-            <input type="text" class="form-input" placeholder="Doe">
+            <input type="text" name="last_name" class="form-input" placeholder="Doe">
           </div>
         </div>
 
         <div>
           <label style="display:block;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#3A4A5A;margin-bottom:8px;">Email</label>
-          <input type="email" class="form-input" placeholder="john@example.com">
+          <input type="email" name="email" class="form-input" placeholder="john@example.com">
         </div>
 
 
         <div>
           <label style="display:block;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#3A4A5A;margin-bottom:8px;">Tell Us About Your Project</label>
-          <textarea class="form-input" rows="5" placeholder="Describe your project, timeline, and any specific requirements…" style="resize:none;"></textarea>
+          <textarea name="message" class="form-input" rows="5" placeholder="Describe your project, timeline, and any specific requirements…" style="resize:none;"></textarea>
         </div>
 
         <button type="submit" class="btn-primary" style="justify-content:center;margin-top:6px;">
