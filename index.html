@@ -436,7 +436,7 @@
   <!-- ═══════════════════════════════════════ HERO ══════════════════════════════════════ -->
   <section class="hero-section" id="home">
     <!-- Reel video background -->
-    <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.39;pointer-events:none;">
+    <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.58;pointer-events:none;">
       <source src="reel_compressed_cut_shorter.mp4" type="video/mp4">
     </video>
     <!-- Dim overlay keeps hero text legible -->
@@ -526,10 +526,11 @@
         <div class="section-label" style="justify-content:center;margin-bottom:16px;">Our Reel</div>
         <h2 class="section-h2">See the <span class="accent">Difference</span></h2>
       </div>
-      <div style="border-radius:22px;overflow:hidden;background:#0C0F18;border:1px solid rgba(255,255,255,0.055);aspect-ratio:16/9;box-shadow:0 40px 80px rgba(0,0,0,0.55),0 0 120px rgba(58,195,253,0.1);">
-        <video controls style="width:100%;height:100%;object-fit:cover;display:block;">
-          <source src="reel_compressed_cut_shorter.mp4" type="video/mp4">
-        </video>
+      <div onclick="playYT(this,'l2ipQRxlDI8')" style="border-radius:22px;overflow:hidden;background:#0C0F18;border:1px solid rgba(255,255,255,0.055);aspect-ratio:16/9;box-shadow:0 40px 80px rgba(0,0,0,0.55),0 0 120px rgba(58,195,253,0.1);position:relative;cursor:pointer;">
+        <img src="https://img.youtube.com/vi/l2ipQRxlDI8/maxresdefault.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:72px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:4px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
       </div>
     </div>
   </section>
