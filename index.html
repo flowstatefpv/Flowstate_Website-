@@ -78,18 +78,69 @@
       height: 46px;
       width: auto;
     }
-    .nav-links { display: flex; align-items: center; gap: 36px; }
-    .nav-link {
+    /* ── HAMBURGER ── */
+    .hamburger-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+    .hamburger-btn:hover { background: rgba(255,255,255,0.06); }
+    .hamburger-btn:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 3px; border-radius: 8px; }
+    .hamburger-bar {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #E8ECF4;
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .hamburger-btn.open .hamburger-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger-btn.open .hamburger-bar:nth-child(2) { opacity: 0; }
+    .hamburger-btn.open .hamburger-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── DROPDOWN MENU ── */
+    #nav-dropdown {
+      position: fixed;
+      top: 72px;
+      left: 0; right: 0;
+      z-index: 999;
+      background: rgba(7,9,14,0.97);
+      backdrop-filter: blur(24px) saturate(1.5);
+      -webkit-backdrop-filter: blur(24px) saturate(1.5);
+      border-bottom: 1px solid rgba(255,255,255,0.055);
+      display: flex;
+      flex-direction: column;
+      padding: 12px 40px 24px;
+      opacity: 0;
+      transform: translateY(-6px);
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    #nav-dropdown.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .dropdown-link {
       color: #7A8699;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       text-decoration: none;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.045);
       transition: color 0.2s ease;
     }
-    .nav-link:hover { color: #E8ECF4; }
-    .nav-link:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 4px; border-radius: 4px; }
+    .dropdown-link:last-child { border-bottom: none; }
+    .dropdown-link:hover { color: #E8ECF4; }
+    .dropdown-link:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 2px; border-radius: 3px; }
 
     /* ── BUTTONS ── */
     .btn-primary {
@@ -421,18 +472,25 @@
         <img src="brand_assets/logo-v2.png" alt="Flowstate FPV" class="logo-img">
       </a>
 
-      <div class="nav-links">
-        <a href="#about"     class="nav-link">About</a>
-        <a href="#services"  class="nav-link">Services</a>
-        <a href="#portfolio" class="nav-link">Portfolio</a>
-        <a href="#contact"   class="nav-link">Contact</a>
-      </div>
+      <button id="menu-btn" class="hamburger-btn" onclick="toggleMenu()" aria-label="Menu" aria-expanded="false">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
 
       <a href="#contact" class="btn-primary" style="padding:11px 22px;font-size:12px;flex-shrink:0;">
         Book a Shoot
       </a>
     </div>
   </nav>
+
+  <!-- Dropdown menu -->
+  <div id="nav-dropdown">
+    <a href="#about"     class="dropdown-link" onclick="closeMenu()">About</a>
+    <a href="#services"  class="dropdown-link" onclick="closeMenu()">Services</a>
+    <a href="#portfolio" class="dropdown-link" onclick="closeMenu()">Portfolio</a>
+    <a href="#contact"   class="dropdown-link" onclick="closeMenu()">Contact</a>
+  </div>
 
   <!-- ═══════════════════════════════════════ HERO ══════════════════════════════════════ -->
   <section class="hero-section" id="home">
@@ -600,7 +658,7 @@
           <img src="https://img.youtube.com/vi/407WMAbYRj4/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
           <div class="portfolio-overlay">
             <div>
-              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Brand Campaign</p>
+              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Property Tour</p>
               <p style="font-size:15px;font-weight:800;color:#E8ECF4;">Texas A&M Engineering</p>
             </div>
           </div>
@@ -613,7 +671,7 @@
           <img src="https://img.youtube.com/vi/sEXuRoqq7z4/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
           <div class="portfolio-overlay">
             <div>
-              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Hotel Brand</p>
+              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Property Tour</p>
               <p style="font-size:15px;font-weight:800;color:#E8ECF4;">Embassy Suites</p>
             </div>
           </div>
@@ -626,7 +684,7 @@
           <img src="https://img.youtube.com/vi/WuYW6dPaE8k/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
           <div class="portfolio-overlay">
             <div>
-              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Property Showcase</p>
+              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Property Tour</p>
               <p style="font-size:15px;font-weight:800;color:#E8ECF4;">South Texas Inspection Program</p>
             </div>
           </div>
@@ -640,7 +698,7 @@
           <img src="https://img.youtube.com/vi/ghwI-8M4Oao/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
           <div class="portfolio-overlay">
             <div>
-              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Hotel Brand</p>
+              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Property Tour</p>
               <p style="font-size:15px;font-weight:800;color:#E8ECF4;">Aloft Hotel</p>
             </div>
           </div>
@@ -653,7 +711,7 @@
           <img src="https://img.youtube.com/vi/soWsWSmpi2U/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
           <div class="portfolio-overlay">
             <div>
-              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Hotel Brand</p>
+              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Property Tour</p>
               <p style="font-size:15px;font-weight:800;color:#E8ECF4;">Home2 Suites</p>
             </div>
           </div>
@@ -772,7 +830,7 @@
 
         <div>
           <label style="display:block;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#3A4A5A;margin-bottom:8px;">Tell Us About Your Project</label>
-          <textarea name="message" class="form-input" rows="5" placeholder="Describe your project, timeline, and any specific requirements…" style="resize:none;"></textarea>
+          <textarea name="message" class="form-input" rows="5" placeholder="Describe your project, timeline, and any specific requirements..." style="resize:none;"></textarea>
         </div>
 
         <button type="submit" class="btn-primary" style="justify-content:center;margin-top:6px;">
@@ -791,6 +849,38 @@
           onmouseover="this.style.color='#52D4FF'" onmouseout="this.style.color='#3AC3FD'">
           erickflowstatefpv@gmail.com
         </a>
+        <br>
+        <a href="tel:+19568870759"
+          style="color:#3AC3FD;font-weight:700;font-size:16px;text-decoration:none;transition:color 0.2s ease;margin-top:8px;display:inline-block;"
+          onmouseover="this.style.color='#52D4FF'" onmouseout="this.style.color='#3AC3FD'">
+          (956) 887-0759
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ LOGO CLOUD (BOTTOM) ════════════════════════ -->
+  <section style="position:relative;padding:56px 0;background:#07090E;overflow:hidden;">
+    <div style="height:1px;background:rgba(255,255,255,0.08);-webkit-mask-image:linear-gradient(to right,transparent,black,transparent);mask-image:linear-gradient(to right,transparent,black,transparent);margin-bottom:56px;"></div>
+    <div class="logo-cloud-outer" style="overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent,black 12%,black 88%,transparent);mask-image:linear-gradient(to right,transparent,black 12%,black 88%,transparent);padding:24px 0;">
+      <div class="logo-cloud-track">
+        <img src="brand_assets/logos/cy_logo_reverse.png"                    alt="Courtyard by Marriott"   loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/aloft-logo-white.png"                   alt="Aloft"                   loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/FairFieldVanityLogo.png"                alt="Fairfield by Marriott"   loading="lazy" class="logo-cloud-img">
+        <img src="MXET_white_Xwide.png"                                       alt="Texas A&M Engineering"   loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/Home2-Logo-White_HR.webp"               alt="Home2 Suites by Hilton"  loading="lazy" class="logo-cloud-img" style="height:62px;">
+        <img src="Embassy-Suites-Logo.png"                                    alt="Embassy Suites by Hilton" loading="lazy" class="logo-cloud-img" style="height:62px;filter:grayscale(1) invert(1) brightness(5);mix-blend-mode:screen;">
+        <img src="brand_assets/logos/McAllen-City-Center-temp-w.png"         alt="McAllen City Center"     loading="lazy" class="logo-cloud-img" style="height:52px;">
+        <img src="brand_assets/logos/Ruby-Red-Logo.png"                      alt="Ruby Red Hospitality"    loading="lazy" class="logo-cloud-img" style="height:52px;">
+        <!-- duplicate for seamless loop -->
+        <img src="brand_assets/logos/cy_logo_reverse.png"                    alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/aloft-logo-white.png"                   alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/FairFieldVanityLogo.png"                alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+        <img src="MXET_white_Xwide.png"                                       alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/Home2-Logo-White_HR.webp"               alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img" style="height:52px;">
+        <img src="Embassy-Suites-Logo.png"                                    alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img" style="height:62px;filter:grayscale(1) invert(1) brightness(5);mix-blend-mode:screen;">
+        <img src="brand_assets/logos/McAllen-City-Center-temp-w.png"         alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/Ruby-Red-Logo.png"                      alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
       </div>
     </div>
   </section>
@@ -818,6 +908,29 @@
     el.style.cursor = 'default';
     el.innerHTML = '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
   }
+
+  function toggleMenu() {
+    var btn = document.getElementById('menu-btn');
+    var dropdown = document.getElementById('nav-dropdown');
+    var isOpen = dropdown.classList.contains('open');
+    dropdown.classList.toggle('open');
+    btn.classList.toggle('open');
+    btn.setAttribute('aria-expanded', !isOpen);
+  }
+
+  function closeMenu() {
+    document.getElementById('nav-dropdown').classList.remove('open');
+    document.getElementById('menu-btn').classList.remove('open');
+    document.getElementById('menu-btn').setAttribute('aria-expanded', 'false');
+  }
+
+  document.addEventListener('click', function(e) {
+    var btn = document.getElementById('menu-btn');
+    var dropdown = document.getElementById('nav-dropdown');
+    if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+      closeMenu();
+    }
+  });
 </script>
 </body>
 </html>
