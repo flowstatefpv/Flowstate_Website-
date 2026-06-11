@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services — Flowstate FPV</title>
+  <link rel="icon" type="image/png" href="brand_assets/logo-v2.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Barlow+Condensed:wght@900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #07090E;
+      color: #E8ECF4;
+      overflow-x: hidden;
+      padding-top: 72px;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      backdrop-filter: blur(24px) saturate(1.5);
+      -webkit-backdrop-filter: blur(24px) saturate(1.5);
+      background: rgba(7, 9, 14, 0.82);
+      border-bottom: 1px solid rgba(255,255,255,0.055);
+    }
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .logo-img { height: 46px; width: auto; }
+
+    .hamburger-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+    .hamburger-btn:hover { background: rgba(255,255,255,0.06); }
+    .hamburger-btn:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 3px; border-radius: 8px; }
+    .hamburger-bar {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #E8ECF4;
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .hamburger-btn.open .hamburger-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger-btn.open .hamburger-bar:nth-child(2) { opacity: 0; }
+    .hamburger-btn.open .hamburger-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    #nav-dropdown {
+      position: fixed;
+      top: 72px;
+      left: 0; right: 0;
+      z-index: 999;
+      background: rgba(7,9,14,0.97);
+      backdrop-filter: blur(24px) saturate(1.5);
+      -webkit-backdrop-filter: blur(24px) saturate(1.5);
+      border-bottom: 1px solid rgba(255,255,255,0.055);
+      display: flex;
+      flex-direction: column;
+      padding: 12px 40px 24px;
+      opacity: 0;
+      transform: translateY(-6px);
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    #nav-dropdown.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .dropdown-link {
+      color: #7A8699;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.045);
+      transition: color 0.2s ease;
+    }
+    .dropdown-link:last-child { border-bottom: none; }
+    .dropdown-link:hover { color: #E8ECF4; }
+    .dropdown-link:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 2px; border-radius: 3px; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1E7AAA;
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, background 0.2s ease;
+      box-shadow: 0 6px 20px rgba(58,195,253,0.18), 0 2px 6px rgba(58,195,253,0.12);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      background: #2490C8;
+      box-shadow: 0 14px 36px rgba(58,195,253,0.25), 0 4px 10px rgba(58,195,253,0.18);
+    }
+    .btn-primary:active { transform: translateY(0) scale(0.99); }
+    .btn-primary:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 3px; }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #3AC3FD;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 2px;
+      background: #3AC3FD;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .section-h2 {
+      font-size: clamp(30px, 4vw, 52px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+    }
+    .accent { color: #3AC3FD; }
+
+    .service-card {
+      background: #0C0F18;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 36px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(58,195,253,0.1) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(58,195,253,0.28);
+      box-shadow: 0 28px 56px rgba(0,0,0,0.4), 0 0 0 1px rgba(58,195,253,0.12), 0 0 80px rgba(58,195,253,0.08);
+    }
+    .service-card:hover::before { opacity: 1; }
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: rgba(58,195,253,0.12);
+      border: 1px solid rgba(58,195,253,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .social-btn {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+    .social-btn:hover {
+      background: rgba(58,195,253,0.15);
+      border-color: rgba(58,195,253,0.3);
+      transform: translateY(-2px);
+    }
+    .social-btn:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 3px; }
+
+    @media (max-width: 900px) {
+      nav { background: #07090E; }
+      .nav-inner { padding: 0 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" style="display:flex;align-items:center;text-decoration:none;flex-shrink:0;">
+        <img src="brand_assets/logo-v2.png" alt="Flowstate FPV" class="logo-img">
+      </a>
+      <button id="menu-btn" class="hamburger-btn" onclick="toggleMenu()" aria-label="Menu" aria-expanded="false">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+      <a href="contact.html" class="btn-primary" style="padding:11px 22px;font-size:12px;flex-shrink:0;">Book a Shoot</a>
+    </div>
+  </nav>
+
+  <div id="nav-dropdown">
+    <a href="portfolio.html" class="dropdown-link" onclick="closeMenu()">Portfolio</a>
+    <a href="services.html"  class="dropdown-link" onclick="closeMenu()">Services</a>
+    <a href="faq.html"       class="dropdown-link" onclick="closeMenu()">FAQ</a>
+    <a href="about.html"     class="dropdown-link" onclick="closeMenu()">About</a>
+    <a href="contact.html"   class="dropdown-link" onclick="closeMenu()">Contact</a>
+  </div>
+
+  <!-- ═══════════════════════════════════════ SERVICES ══════════════════════════════════ -->
+  <section id="services" style="padding:96px 24px;background:#07090E;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(58,195,253,0.055) 0%,transparent 70%);pointer-events:none;"></div>
+
+    <div style="max-width:1200px;margin:0 auto;position:relative;">
+      <div style="text-align:center;margin-bottom:64px;">
+        <div class="section-label" style="justify-content:center;margin-bottom:16px;">What We Do</div>
+        <h2 class="section-h2" style="margin-bottom:18px;">Services Built for <span class="accent">Impact</span></h2>
+        <p style="font-size:16px;color:#5E6E85;line-height:1.75;max-width:440px;margin:0 auto;font-weight:500;">From property showcases to high-speed FPV video, we create content designed to capture attention and convert viewers.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;">
+
+        <!-- Aerial -->
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3AC3FD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="6" height="6" rx="1"/>
+              <line x1="9" y1="9" x2="4" y2="4"/><line x1="15" y1="9" x2="20" y2="4"/>
+              <line x1="9" y1="15" x2="4" y2="20"/><line x1="15" y1="15" x2="20" y2="20"/>
+              <circle cx="4" cy="4" r="2"/><circle cx="20" cy="4" r="2"/>
+              <circle cx="4" cy="20" r="2"/><circle cx="20" cy="20" r="2"/>
+            </svg>
+          </div>
+          <h3 style="font-size:19px;font-weight:800;letter-spacing:-0.02em;margin-bottom:12px;">FPV Videography</h3>
+          <p style="font-size:14px;color:#5E6E85;line-height:1.75;font-weight:500;">Immersive FPV drone video that showcases your property, business, or facility through cinematic fly-throughs.<br><br>Ideal for: Hotels, Events, and Commercial Real-Estate.</p>
+        </div>
+
+        <!-- Events -->
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3AC3FD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
+            </svg>
+          </div>
+          <h3 style="font-size:19px;font-weight:800;letter-spacing:-0.02em;margin-bottom:12px;">Property Photography</h3>
+          <p style="font-size:14px;color:#5E6E85;line-height:1.75;font-weight:500;">Professional aerial and ground photography that highlights properties, businesses, and commercial spaces.<br><br>Ideal For: Commercial Real Estate, Construction Projects, and Local Businesses.</p>
+        </div>
+
+        <!-- Real Estate -->
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3AC3FD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/>
+            </svg>
+          </div>
+          <h3 style="font-size:19px;font-weight:800;letter-spacing:-0.02em;margin-bottom:12px;">Property Videography</h3>
+          <p style="font-size:14px;color:#5E6E85;line-height:1.75;font-weight:500;">High-quality ground and aerial videography designed to showcase spaces and Real-Estate.<br><br>Ideal For: Businesses, Commercial Real-Estate, and Hospitality Brands.</p>
+        </div>
+
+        <!-- Content Packages card — temporarily hidden, uncomment to restore
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3AC3FD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+            </svg>
+          </div>
+          <h3 style="font-size:19px;font-weight:800;letter-spacing:-0.02em;margin-bottom:12px;">Content Packages</h3>
+          <p style="font-size:14px;color:#5E6E85;line-height:1.75;font-weight:500;">Custom bundled media solutions combining photo, video, and drone coverage tailored to your goals.<br><br>Ideal For: Business Marketing, Property Launches, and Social Media Content.</p>
+        </div>
+        -->
+
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:#07090E;border-top:1px solid rgba(255,255,255,0.045);padding:32px 24px;">
+    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+      <div style="display:flex;gap:10px;">
+        <a href="https://www.instagram.com/flowstate_fpv" class="social-btn" aria-label="Instagram">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5E6E85" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="mailto:erickflowstatefpv@gmail.com" class="social-btn" aria-label="Email">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5E6E85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+        </a>
+      </div>
+      <a href="tel:+19568870759" style="font-size:13px;font-weight:600;color:#3A4455;text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='#8899AA'" onmouseout="this.style.color='#3A4455'">(956) 887-0759</a>
+    </div>
+  </footer>
+
+<script>
+  function toggleMenu() {
+    var btn = document.getElementById('menu-btn');
+    var dropdown = document.getElementById('nav-dropdown');
+    var isOpen = dropdown.classList.contains('open');
+    dropdown.classList.toggle('open');
+    btn.classList.toggle('open');
+    btn.setAttribute('aria-expanded', !isOpen);
+  }
+  function closeMenu() {
+    document.getElementById('nav-dropdown').classList.remove('open');
+    document.getElementById('menu-btn').classList.remove('open');
+    document.getElementById('menu-btn').setAttribute('aria-expanded', 'false');
+  }
+  document.addEventListener('click', function(e) {
+    var btn = document.getElementById('menu-btn');
+    var dropdown = document.getElementById('nav-dropdown');
+    if (!btn.contains(e.target) && !dropdown.contains(e.target)) { closeMenu(); }
+  });
+</script>
+</body>
+</html>

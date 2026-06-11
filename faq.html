@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ — Flowstate FPV</title>
+  <link rel="icon" type="image/png" href="brand_assets/logo-v2.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Barlow+Condensed:wght@900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #07090E;
+      color: #E8ECF4;
+      overflow-x: hidden;
+      padding-top: 72px;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      backdrop-filter: blur(24px) saturate(1.5);
+      -webkit-backdrop-filter: blur(24px) saturate(1.5);
+      background: rgba(7, 9, 14, 0.82);
+      border-bottom: 1px solid rgba(255,255,255,0.055);
+    }
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .logo-img { height: 46px; width: auto; }
+
+    .hamburger-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+    .hamburger-btn:hover { background: rgba(255,255,255,0.06); }
+    .hamburger-btn:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 3px; border-radius: 8px; }
+    .hamburger-bar {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #E8ECF4;
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .hamburger-btn.open .hamburger-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger-btn.open .hamburger-bar:nth-child(2) { opacity: 0; }
+    .hamburger-btn.open .hamburger-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    #nav-dropdown {
+      position: fixed;
+      top: 72px;
+      left: 0; right: 0;
+      z-index: 999;
+      background: rgba(7,9,14,0.97);
+      backdrop-filter: blur(24px) saturate(1.5);
+      -webkit-backdrop-filter: blur(24px) saturate(1.5);
+      border-bottom: 1px solid rgba(255,255,255,0.055);
+      display: flex;
+      flex-direction: column;
+      padding: 12px 40px 24px;
+      opacity: 0;
+      transform: translateY(-6px);
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    #nav-dropdown.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .dropdown-link {
+      color: #7A8699;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.045);
+      transition: color 0.2s ease;
+    }
+    .dropdown-link:last-child { border-bottom: none; }
+    .dropdown-link:hover { color: #E8ECF4; }
+    .dropdown-link:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 2px; border-radius: 3px; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1E7AAA;
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, background 0.2s ease;
+      box-shadow: 0 6px 20px rgba(58,195,253,0.18), 0 2px 6px rgba(58,195,253,0.12);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      background: #2490C8;
+      box-shadow: 0 14px 36px rgba(58,195,253,0.25), 0 4px 10px rgba(58,195,253,0.18);
+    }
+    .btn-primary:active { transform: translateY(0) scale(0.99); }
+    .btn-primary:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 3px; }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #3AC3FD;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 2px;
+      background: #3AC3FD;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .section-h2 {
+      font-size: clamp(30px, 4vw, 52px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+    }
+    .accent { color: #3AC3FD; }
+
+    .faq-item { border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .faq-btn {
+      width: 100%;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 24px 0;
+      text-align: left;
+    }
+    .faq-btn:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 3px; border-radius: 4px; }
+    .faq-icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid #3AC3FD;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease, background 0.2s ease;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); background: rgba(58,195,253,0.12); }
+    .faq-question {
+      font-size: 15px;
+      font-weight: 700;
+      color: #E8ECF4;
+      letter-spacing: -0.01em;
+      line-height: 1.4;
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+      padding: 0 0 0 42px;
+    }
+    .faq-item.open .faq-answer { max-height: 800px; padding: 0 0 24px 42px; }
+    .faq-answer p { font-size: 14px; color: #5E6E85; line-height: 1.8; font-weight: 500; }
+    .faq-answer p + p { margin-top: 14px; }
+
+    .social-btn {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+    .social-btn:hover {
+      background: rgba(58,195,253,0.15);
+      border-color: rgba(58,195,253,0.3);
+      transform: translateY(-2px);
+    }
+    .social-btn:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 3px; }
+
+    @media (max-width: 900px) {
+      nav { background: #07090E; }
+      .nav-inner { padding: 0 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" style="display:flex;align-items:center;text-decoration:none;flex-shrink:0;">
+        <img src="brand_assets/logo-v2.png" alt="Flowstate FPV" class="logo-img">
+      </a>
+      <button id="menu-btn" class="hamburger-btn" onclick="toggleMenu()" aria-label="Menu" aria-expanded="false">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+      <a href="contact.html" class="btn-primary" style="padding:11px 22px;font-size:12px;flex-shrink:0;">Book a Shoot</a>
+    </div>
+  </nav>
+
+  <div id="nav-dropdown">
+    <a href="portfolio.html" class="dropdown-link" onclick="closeMenu()">Portfolio</a>
+    <a href="services.html"  class="dropdown-link" onclick="closeMenu()">Services</a>
+    <a href="faq.html"       class="dropdown-link" onclick="closeMenu()">FAQ</a>
+    <a href="about.html"     class="dropdown-link" onclick="closeMenu()">About</a>
+    <a href="contact.html"   class="dropdown-link" onclick="closeMenu()">Contact</a>
+  </div>
+
+  <!-- ════════════════════════════════════════ FAQ ════════════════════════════════════════ -->
+  <section id="faq" style="padding:96px 24px;background:#07090E;">
+    <div style="max-width:760px;margin:0 auto;">
+      <div style="margin-bottom:56px;">
+        <div class="section-label" style="margin-bottom:16px;">FAQ</div>
+        <h2 class="section-h2">Common <span class="accent">Questions</span></h2>
+      </div>
+
+      <div id="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-btn" onclick="toggleFaq(this)">
+            <span class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><line x1="5" y1="1" x2="5" y2="9" stroke="#3AC3FD" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke="#3AC3FD" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            <span class="faq-question">What is FPV?</span>
+          </button>
+          <div class="faq-answer"><p>FPV (First-Person View) is a style of drone flying that allows for smooth, immersive video footage and dynamic camera movements that traditional drones cannot achieve. It creates a seamless virtual tour experience that helps properties, businesses, and brands stand out.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-btn" onclick="toggleFaq(this)">
+            <span class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><line x1="5" y1="1" x2="5" y2="9" stroke="#3AC3FD" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke="#3AC3FD" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            <span class="faq-question">Do you offer traditional real estate photography and videography?</span>
+          </button>
+          <div class="faq-answer"><p>Yes. In addition to FPV drone services, I offer professional ground-based real estate photography, videography, aerial photography, and aerial video.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-btn" onclick="toggleFaq(this)">
+            <span class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><line x1="5" y1="1" x2="5" y2="9" stroke="#3AC3FD" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke="#3AC3FD" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            <span class="faq-question">Are you FAA certified?</span>
+          </button>
+          <div class="faq-answer"><p>Yes, I hold an active FAA Part 107 Remote Pilot Certificate.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-btn" onclick="toggleFaq(this)">
+            <span class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><line x1="5" y1="1" x2="5" y2="9" stroke="#3AC3FD" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke="#3AC3FD" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            <span class="faq-question">Are you insured?</span>
+          </button>
+          <div class="faq-answer"><p>Yes. I carry commercial drone liability insurance of $1M.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-btn" onclick="toggleFaq(this)">
+            <span class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><line x1="5" y1="1" x2="5" y2="9" stroke="#3AC3FD" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke="#3AC3FD" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            <span class="faq-question">Do you fly indoors and outdoors?</span>
+          </button>
+          <div class="faq-answer"><p>Yes! Indoor FPV flights are one of my specialties. I use small ducted drones designed to safely operate around people, equipment, and property. For the outside shoots this can range from traditional real-estate style drone video to chasing cars on a race track.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-btn" onclick="toggleFaq(this)">
+            <span class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><line x1="5" y1="1" x2="5" y2="9" stroke="#3AC3FD" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke="#3AC3FD" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            <span class="faq-question">How fast can you fly?</span>
+          </button>
+          <div class="faq-answer"><p>Depending on the drone and filming requirements, I can capture footage at speeds approaching 100 mph.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-btn" onclick="toggleFaq(this)">
+            <span class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><line x1="5" y1="1" x2="5" y2="9" stroke="#3AC3FD" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke="#3AC3FD" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            <span class="faq-question">What areas do you serve?</span>
+          </button>
+          <div class="faq-answer"><p>Based in Texas, I travel throughout the state and am available for projects nationwide.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-btn" onclick="toggleFaq(this)">
+            <span class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><line x1="5" y1="1" x2="5" y2="9" stroke="#3AC3FD" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke="#3AC3FD" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            <span class="faq-question">How long does it take to receive the final content?</span>
+          </button>
+          <div class="faq-answer"><p>Most projects are delivered within 3–7 business days, depending on project scope. Expedited delivery may be available upon request.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-btn" onclick="toggleFaq(this)">
+            <span class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><line x1="5" y1="1" x2="5" y2="9" stroke="#3AC3FD" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke="#3AC3FD" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            <span class="faq-question">Who runs Flowstate FPV?</span>
+          </button>
+          <div class="faq-answer">
+            <p>Flowstate FPV is a team of three passionate creators and professionals.</p>
+            <p>I am the lead pilot, videographer, and founder — a Texas A&amp;M engineering graduate with over nine years of drone flying experience specializing in FPV and aerial videography.</p>
+            <p>My sister serves as our lead editor and studies art and film at NYU, bringing professional storytelling and post-production expertise to every project.</p>
+            <p>Our sales manager is also an engineer from Texas, helping clients plan projects, coordinate logistics, and ensure every production runs smoothly from inquiry to final delivery.</p>
+            <p>Together, we combine technical expertise, creative vision, and exceptional client service to deliver high-quality aerial content.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:#07090E;border-top:1px solid rgba(255,255,255,0.045);padding:32px 24px;">
+    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+      <div style="display:flex;gap:10px;">
+        <a href="https://www.instagram.com/flowstate_fpv" class="social-btn" aria-label="Instagram">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5E6E85" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="mailto:erickflowstatefpv@gmail.com" class="social-btn" aria-label="Email">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5E6E85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+        </a>
+      </div>
+      <a href="tel:+19568870759" style="font-size:13px;font-weight:600;color:#3A4455;text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='#8899AA'" onmouseout="this.style.color='#3A4455'">(956) 887-0759</a>
+    </div>
+  </footer>
+
+<script>
+  function toggleFaq(btn) {
+    var item = btn.closest('.faq-item');
+    var isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(function(el) { el.classList.remove('open'); });
+    if (!isOpen) item.classList.add('open');
+  }
+  function toggleMenu() {
+    var btn = document.getElementById('menu-btn');
+    var dropdown = document.getElementById('nav-dropdown');
+    var isOpen = dropdown.classList.contains('open');
+    dropdown.classList.toggle('open');
+    btn.classList.toggle('open');
+    btn.setAttribute('aria-expanded', !isOpen);
+  }
+  function closeMenu() {
+    document.getElementById('nav-dropdown').classList.remove('open');
+    document.getElementById('menu-btn').classList.remove('open');
+    document.getElementById('menu-btn').setAttribute('aria-expanded', 'false');
+  }
+  document.addEventListener('click', function(e) {
+    var btn = document.getElementById('menu-btn');
+    var dropdown = document.getElementById('nav-dropdown');
+    if (!btn.contains(e.target) && !dropdown.contains(e.target)) { closeMenu(); }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Flowstate FPV</title>
+  <link rel="icon" type="image/png" href="brand_assets/logo-v2.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Barlow+Condensed:wght@900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #07090E;
+      color: #E8ECF4;
+      overflow-x: hidden;
+      padding-top: 72px;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      backdrop-filter: blur(24px) saturate(1.5);
+      -webkit-backdrop-filter: blur(24px) saturate(1.5);
+      background: rgba(7, 9, 14, 0.82);
+      border-bottom: 1px solid rgba(255,255,255,0.055);
+    }
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .logo-img { height: 46px; width: auto; }
+
+    .hamburger-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+    .hamburger-btn:hover { background: rgba(255,255,255,0.06); }
+    .hamburger-btn:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 3px; border-radius: 8px; }
+    .hamburger-bar {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #E8ECF4;
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .hamburger-btn.open .hamburger-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger-btn.open .hamburger-bar:nth-child(2) { opacity: 0; }
+    .hamburger-btn.open .hamburger-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    #nav-dropdown {
+      position: fixed;
+      top: 72px;
+      left: 0; right: 0;
+      z-index: 999;
+      background: rgba(7,9,14,0.97);
+      backdrop-filter: blur(24px) saturate(1.5);
+      -webkit-backdrop-filter: blur(24px) saturate(1.5);
+      border-bottom: 1px solid rgba(255,255,255,0.055);
+      display: flex;
+      flex-direction: column;
+      padding: 12px 40px 24px;
+      opacity: 0;
+      transform: translateY(-6px);
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    #nav-dropdown.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .dropdown-link {
+      color: #7A8699;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.045);
+      transition: color 0.2s ease;
+    }
+    .dropdown-link:last-child { border-bottom: none; }
+    .dropdown-link:hover { color: #E8ECF4; }
+    .dropdown-link:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 2px; border-radius: 3px; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1E7AAA;
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, background 0.2s ease;
+      box-shadow: 0 6px 20px rgba(58,195,253,0.18), 0 2px 6px rgba(58,195,253,0.12);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      background: #2490C8;
+      box-shadow: 0 14px 36px rgba(58,195,253,0.25), 0 4px 10px rgba(58,195,253,0.18);
+    }
+    .btn-primary:active { transform: translateY(0) scale(0.99); }
+    .btn-primary:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 3px; }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #3AC3FD;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 2px;
+      background: #3AC3FD;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .section-h2 {
+      font-size: clamp(30px, 4vw, 52px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+    }
+    .accent { color: #3AC3FD; }
+
+    .form-input {
+      width: 100%;
+      background: rgba(255,255,255,0.038);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 15px 18px;
+      color: #E8ECF4;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .form-input::placeholder { color: #3A4455; }
+    .form-input:focus {
+      border-color: rgba(58, 195, 253, 0.5);
+      box-shadow: 0 0 0 3px rgba(58, 195, 253, 0.1);
+    }
+
+    @keyframes logo-marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .logo-cloud-track {
+      display: flex;
+      width: max-content;
+      align-items: center;
+      gap: 42px;
+      animation: logo-marquee 40s linear infinite;
+      will-change: transform;
+    }
+    .logo-cloud-outer:hover .logo-cloud-track { animation-duration: 25s; }
+    .logo-cloud-img {
+      height: 28px;
+      width: auto;
+      pointer-events: none;
+      user-select: none;
+      filter: brightness(0) invert(1);
+      opacity: 0.8;
+      flex-shrink: 0;
+    }
+    @media (min-width: 768px) { .logo-cloud-img { height: 36px; } }
+
+    .social-btn {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+    .social-btn:hover {
+      background: rgba(58,195,253,0.15);
+      border-color: rgba(58,195,253,0.3);
+      transform: translateY(-2px);
+    }
+    .social-btn:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 3px; }
+
+    @media (max-width: 900px) {
+      nav { background: #07090E; }
+      .nav-inner { padding: 0 24px; }
+    }
+    @media (max-width: 600px) {
+      .contact-name-row { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" style="display:flex;align-items:center;text-decoration:none;flex-shrink:0;">
+        <img src="brand_assets/logo-v2.png" alt="Flowstate FPV" class="logo-img">
+      </a>
+      <button id="menu-btn" class="hamburger-btn" onclick="toggleMenu()" aria-label="Menu" aria-expanded="false">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+      <a href="contact.html" class="btn-primary" style="padding:11px 22px;font-size:12px;flex-shrink:0;">Book a Shoot</a>
+    </div>
+  </nav>
+
+  <div id="nav-dropdown">
+    <a href="portfolio.html" class="dropdown-link" onclick="closeMenu()">Portfolio</a>
+    <a href="services.html"  class="dropdown-link" onclick="closeMenu()">Services</a>
+    <a href="faq.html"       class="dropdown-link" onclick="closeMenu()">FAQ</a>
+    <a href="about.html"     class="dropdown-link" onclick="closeMenu()">About</a>
+    <a href="contact.html"   class="dropdown-link" onclick="closeMenu()">Contact</a>
+  </div>
+
+  <!-- ═══════════════════════════════════════ CONTACT ═══════════════════════════════════ -->
+  <section id="contact" style="padding:112px 24px;background:#0B0D16;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(58,195,253,0.07) 0%,transparent 70%);pointer-events:none;"></div>
+
+    <div style="max-width:680px;margin:0 auto;position:relative;">
+      <div style="text-align:center;margin-bottom:60px;">
+        <div class="section-label" style="justify-content:center;margin-bottom:16px;">Get In Touch</div>
+        <h2 class="section-h2" style="margin-bottom:16px;">Let's <span class="accent">Create</span></h2>
+        <p style="font-size:16px;color:#5E6E85;line-height:1.75;font-weight:500;">Tell us about your project and we'll respond within 24 hours.</p>
+      </div>
+
+      <form style="display:flex;flex-direction:column;gap:14px;" action="https://formspree.io/f/xnjrlono" method="POST">
+        <div class="contact-name-row" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div>
+            <label style="display:block;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#3A4A5A;margin-bottom:8px;">First Name</label>
+            <input type="text" name="first_name" class="form-input" placeholder="John">
+          </div>
+          <div>
+            <label style="display:block;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#3A4A5A;margin-bottom:8px;">Last Name</label>
+            <input type="text" name="last_name" class="form-input" placeholder="Doe">
+          </div>
+        </div>
+
+        <div>
+          <label style="display:block;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#3A4A5A;margin-bottom:8px;">Email</label>
+          <input type="email" name="email" class="form-input" placeholder="john@example.com">
+        </div>
+
+        <div>
+          <label style="display:block;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#3A4A5A;margin-bottom:8px;">Tell Us About Your Project</label>
+          <textarea name="message" class="form-input" rows="5" placeholder="Describe your project, timeline, and any specific requirements..." style="resize:none;"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="justify-content:center;margin-top:6px;">
+          Send Message
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
+      </form>
+
+      <div style="margin-top:16px;text-align:center;padding-top:16px;border-top:1px solid rgba(255,255,255,0.055);">
+        <p style="font-size:13px;color:#2D3A46;margin-bottom:12px;font-weight:500;">Or reach us directly</p>
+        <a href="mailto:erickflowstatefpv@gmail.com"
+          style="color:#3AC3FD;font-weight:700;font-size:16px;text-decoration:none;transition:color 0.2s ease;"
+          onmouseover="this.style.color='#52D4FF'" onmouseout="this.style.color='#3AC3FD'">
+          erickflowstatefpv@gmail.com
+        </a>
+        <br>
+        <a href="tel:+19568870759"
+          style="color:#3AC3FD;font-weight:700;font-size:16px;text-decoration:none;transition:color 0.2s ease;margin-top:8px;display:inline-block;"
+          onmouseover="this.style.color='#52D4FF'" onmouseout="this.style.color='#3AC3FD'">
+          (956) 887-0759
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ LOGO CLOUD (BOTTOM) ════════════════════════ -->
+  <section style="position:relative;padding:56px 0;background:#07090E;overflow:hidden;">
+    <div style="height:1px;background:rgba(255,255,255,0.08);-webkit-mask-image:linear-gradient(to right,transparent,black,transparent);mask-image:linear-gradient(to right,transparent,black,transparent);margin-bottom:56px;"></div>
+    <div class="logo-cloud-outer" style="overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent,black 12%,black 88%,transparent);mask-image:linear-gradient(to right,transparent,black 12%,black 88%,transparent);padding:24px 0;">
+      <div class="logo-cloud-track">
+        <img src="brand_assets/logos/cy_logo_reverse.png"                    alt="Courtyard by Marriott"   loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/aloft-logo-white.png"                   alt="Aloft"                   loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/FairFieldVanityLogo.png"                alt="Fairfield by Marriott"   loading="lazy" class="logo-cloud-img">
+        <img src="MXET_white_Xwide.png"                                       alt="Texas A&amp;M Engineering"   loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/Home2-Logo-White_HR.webp"               alt="Home2 Suites by Hilton"  loading="lazy" class="logo-cloud-img" style="height:62px;">
+        <img src="Embassy-Suites-Logo.png"                                    alt="Embassy Suites by Hilton" loading="lazy" class="logo-cloud-img" style="height:62px;filter:grayscale(1) invert(1) brightness(5);mix-blend-mode:screen;">
+        <img src="brand_assets/logos/McAllen-City-Center-temp-w.png"         alt="McAllen City Center"     loading="lazy" class="logo-cloud-img" style="height:52px;">
+        <img src="brand_assets/logos/Ruby-Red-Logo.png"                      alt="Ruby Red Hospitality"    loading="lazy" class="logo-cloud-img" style="height:52px;">
+        <!-- duplicate for seamless loop -->
+        <img src="brand_assets/logos/cy_logo_reverse.png"                    alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/aloft-logo-white.png"                   alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/FairFieldVanityLogo.png"                alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+        <img src="MXET_white_Xwide.png"                                       alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/Home2-Logo-White_HR.webp"               alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img" style="height:52px;">
+        <img src="Embassy-Suites-Logo.png"                                    alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img" style="height:62px;filter:grayscale(1) invert(1) brightness(5);mix-blend-mode:screen;">
+        <img src="brand_assets/logos/McAllen-City-Center-temp-w.png"         alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+        <img src="brand_assets/logos/Ruby-Red-Logo.png"                      alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:#07090E;border-top:1px solid rgba(255,255,255,0.045);padding:32px 24px;">
+    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+      <div style="display:flex;gap:10px;">
+        <a href="https://www.instagram.com/flowstate_fpv" class="social-btn" aria-label="Instagram">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5E6E85" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="mailto:erickflowstatefpv@gmail.com" class="social-btn" aria-label="Email">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5E6E85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+        </a>
+      </div>
+      <a href="tel:+19568870759" style="font-size:13px;font-weight:600;color:#3A4455;text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='#8899AA'" onmouseout="this.style.color='#3A4455'">(956) 887-0759</a>
+    </div>
+  </footer>
+
+<script>
+  function toggleMenu() {
+    var btn = document.getElementById('menu-btn');
+    var dropdown = document.getElementById('nav-dropdown');
+    var isOpen = dropdown.classList.contains('open');
+    dropdown.classList.toggle('open');
+    btn.classList.toggle('open');
+    btn.setAttribute('aria-expanded', !isOpen);
+  }
+  function closeMenu() {
+    document.getElementById('nav-dropdown').classList.remove('open');
+    document.getElementById('menu-btn').classList.remove('open');
+    document.getElementById('menu-btn').setAttribute('aria-expanded', 'false');
+  }
+  document.addEventListener('click', function(e) {
+    var btn = document.getElementById('menu-btn');
+    var dropdown = document.getElementById('nav-dropdown');
+    if (!btn.contains(e.target) && !dropdown.contains(e.target)) { closeMenu(); }
+  });
+</script>
+</body>
+</html>
