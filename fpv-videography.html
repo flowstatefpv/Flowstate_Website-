@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio — Flowstate FPV</title>
+  <title>FPV Videography — Flowstate FPV</title>
   <link rel="icon" type="image/png" href="brand_assets/logo-v2.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,14 +12,12 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
     body {
       font-family: 'Montserrat', sans-serif;
       background: #07090E;
       color: #E8ECF4;
       overflow-x: hidden;
     }
-
     body::after {
       content: '';
       position: fixed;
@@ -29,7 +27,6 @@
       opacity: 0.028;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
     }
-
     nav {
       z-index: 1000;
       backdrop-filter: blur(24px) saturate(1.5);
@@ -48,7 +45,6 @@
       gap: 24px;
     }
     .logo-img { height: 46px; width: auto; }
-
     .hamburger-btn {
       display: flex;
       flex-direction: column;
@@ -61,7 +57,6 @@
       transition: background 0.2s ease;
     }
     .hamburger-btn:hover { background: rgba(255,255,255,0.06); }
-    .hamburger-btn:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 3px; border-radius: 8px; }
     .hamburger-bar {
       display: block;
       width: 22px;
@@ -73,7 +68,6 @@
     .hamburger-btn.open .hamburger-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .hamburger-btn.open .hamburger-bar:nth-child(2) { opacity: 0; }
     .hamburger-btn.open .hamburger-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
     #nav-dropdown {
       position: absolute;
       top: 72px;
@@ -105,8 +99,6 @@
     }
     .dropdown-link:last-child { border-bottom: none; }
     .dropdown-link:hover { color: #E8ECF4; }
-    .dropdown-link:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 2px; border-radius: 3px; }
-
     .btn-primary {
       display: inline-flex;
       align-items: center;
@@ -132,8 +124,6 @@
       box-shadow: 0 14px 36px rgba(58,195,253,0.25), 0 4px 10px rgba(58,195,253,0.18);
     }
     .btn-primary:active { transform: translateY(0) scale(0.99); }
-    .btn-primary:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 3px; }
-
     .section-label {
       display: inline-flex;
       align-items: center;
@@ -153,19 +143,7 @@
       border-radius: 2px;
       flex-shrink: 0;
     }
-    .section-h2 {
-      font-size: clamp(30px, 4vw, 52px);
-      font-weight: 800;
-      line-height: 1.08;
-      letter-spacing: -0.03em;
-    }
     .accent { color: #3AC3FD; }
-
-    .portfolio-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
     .portfolio-item {
       position: relative;
       overflow: hidden;
@@ -182,12 +160,10 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(to top, rgba(7,9,14,0.88) 0%, rgba(7,9,14,0.2) 50%, transparent 100%);
-      opacity: 1;
       display: flex;
       align-items: flex-end;
       padding: 22px;
     }
-
     .social-btn {
       width: 40px; height: 40px;
       border-radius: 10px;
@@ -199,17 +175,11 @@
       text-decoration: none;
       transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
     }
-    .social-btn:hover {
-      background: rgba(58,195,253,0.15);
-      border-color: rgba(58,195,253,0.3);
-      transform: translateY(-2px);
-    }
-    .social-btn:focus-visible { outline: 2px solid #3AC3FD; outline-offset: 3px; }
-
+    .social-btn:hover { background: rgba(58,195,253,0.15); border-color: rgba(58,195,253,0.3); transform: translateY(-2px); }
     @media (max-width: 900px) {
       nav { background: #07090E; }
       .nav-inner { padding: 0 24px; }
-      .portfolio-grid { flex-direction: column; }
+      .example-row { grid-template-columns: 1fr !important; }
     }
   </style>
 </head>
@@ -229,7 +199,6 @@
       <a href="contact.html" class="btn-primary" style="padding:11px 22px;font-size:12px;flex-shrink:0;">Book a Shoot</a>
     </div>
   </nav>
-
   <div id="nav-dropdown">
     <a href="index.html"     class="dropdown-link" onclick="closeMenu()">Home</a>
     <a href="portfolio.html" class="dropdown-link" onclick="closeMenu()">Work Highlights</a>
@@ -240,103 +209,110 @@
   </div>
   </div>
 
-  <!-- ═══════════════════════════════════════ PORTFOLIO ═════════════════════════════════ -->
-  <section id="portfolio" style="padding:96px 24px;background:#07090E;">
+  <!-- SERVICE HEADER -->
+  <section style="padding:96px 24px 32px;background:#07090E;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(58,195,253,0.06) 0%,transparent 70%);pointer-events:none;"></div>
+    <div style="max-width:760px;margin:0 auto;position:relative;">
+      <div class="section-label" style="margin-bottom:20px;">Services</div>
+      <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(40px,6vw,80px);font-weight:900;line-height:1;letter-spacing:0.01em;text-transform:uppercase;margin-bottom:28px;">
+        FPV <span class="accent">Videography</span>
+      </h1>
+    </div>
+  </section>
+
+  <!-- WHAT IS FPV -->
+  <section style="padding:0 24px 80px;background:#07090E;">
+    <div style="max-width:760px;margin:0 auto;">
+      <p style="font-size:17px;color:#5E6E85;line-height:1.8;font-weight:500;margin-bottom:20px;">
+        FPV videography creates smooth, immersive fly-throughs that showcase your property, business, or facility in a way traditional cameras can't. By moving seamlessly through indoor and outdoor spaces in a single shot, FPV captures the flow, and atmosphere of an environment.
+      </p>
+    </div>
+  </section>
+
+  <!-- EXAMPLES -->
+  <section style="padding:0 24px 80px;background:#07090E;">
     <div style="max-width:1200px;margin:0 auto;">
-      <div style="margin-bottom:56px;">
-        <div class="section-label" style="margin-bottom:16px;">Portfolio</div>
-        <h2 class="section-h2">Work <span class="accent">Highlights</span></h2>
+      <div style="margin-bottom:48px;">
+        <div class="section-label">Examples</div>
       </div>
+      <div style="display:flex;flex-direction:column;gap:72px;">
 
-      <div class="portfolio-grid">
-
-        <div class="portfolio-item" style="height:420px;cursor:pointer;" onclick="playYT(this,'6Uuj0iyU8T8')">
-          <img src="https://img.youtube.com/vi/6Uuj0iyU8T8/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-          <div class="portfolio-overlay">
-            <div>
-              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Property Tour</p>
-              <p style="font-size:15px;font-weight:800;color:#E8ECF4;">Embassy Suites</p>
+        <!-- Embassy Suites -->
+        <div class="example-row" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
+          <div class="portfolio-item" style="height:360px;cursor:pointer;" onclick="playYT(this,'6Uuj0iyU8T8')">
+            <img src="https://img.youtube.com/vi/6Uuj0iyU8T8/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+            <div class="portfolio-overlay">
+              <div>
+                <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Hospitality</p>
+                <p style="font-size:15px;font-weight:800;color:#E8ECF4;">Embassy Suites</p>
+              </div>
+            </div>
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             </div>
           </div>
-          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <div>
+            <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;margin-bottom:16px;">Embassy Suites</h3>
+            <p style="font-size:15px;color:#5E6E85;line-height:1.8;font-weight:500;">
+              Upon completing this property, Alamo System Industries and Ruby Red Hospitality wanted to showcase their finished project in a way that matched the quality of the build itself. The result was a polished FPV showcase that highlights the architecture, amenities, and atmosphere of the hotel from angles that leave a lasting impression.
+            </p>
           </div>
         </div>
 
-        <div class="portfolio-item" style="height:420px;cursor:pointer;" onclick="playYT(this,'407WMAbYRj4')">
-          <img src="https://img.youtube.com/vi/407WMAbYRj4/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-          <div class="portfolio-overlay">
-            <div>
-              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Property Tour</p>
-              <p style="font-size:15px;font-weight:800;color:#E8ECF4;">Texas A&amp;M Engineering</p>
+        <!-- Texas A&M -->
+        <div class="example-row" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
+          <div class="portfolio-item" style="height:360px;cursor:pointer;" onclick="playYT(this,'407WMAbYRj4')">
+            <img src="https://img.youtube.com/vi/407WMAbYRj4/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+            <div class="portfolio-overlay">
+              <div>
+                <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Property Tour</p>
+                <p style="font-size:15px;font-weight:800;color:#E8ECF4;">Texas A&amp;M Engineering</p>
+              </div>
+            </div>
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             </div>
           </div>
-          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <div>
+            <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;margin-bottom:16px;">Texas A&amp;M Engineering</h3>
+            <p style="font-size:15px;color:#5E6E85;line-height:1.8;font-weight:500;">
+              The Mechatronics department at Texas A&amp;M commissioned a property tour to showcase the Sbisa building — home to the mechatronics labs and conference rooms. The goal was a dynamic, immersive walkthrough that communicated the scale and quality of the facility to prospective students, faculty, and stakeholders.
+            </p>
           </div>
         </div>
 
-        <div class="portfolio-item" style="height:420px;cursor:pointer;" onclick="playYT(this,'WuYW6dPaE8k')">
-          <img src="https://img.youtube.com/vi/WuYW6dPaE8k/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-          <div class="portfolio-overlay">
-            <div>
-              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Construction Project Update</p>
-              <p style="font-size:15px;font-weight:800;color:#E8ECF4;">South Texas Inspection Program</p>
+        <!-- SRS Building -->
+        <div class="example-row" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
+          <div class="portfolio-item" style="height:360px;cursor:pointer;" onclick="playYT(this,'_V8mftsZc9s')">
+            <img src="https://img.youtube.com/vi/_V8mftsZc9s/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+            <div class="portfolio-overlay">
+              <div>
+                <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Construction Project Update</p>
+                <p style="font-size:15px;font-weight:800;color:#E8ECF4;">SRS Building</p>
+              </div>
+            </div>
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             </div>
           </div>
-          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <div>
+            <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;margin-bottom:16px;">SRS Building</h3>
+            <p style="font-size:15px;color:#5E6E85;line-height:1.8;font-weight:500;">
+              Alamo System Industries needed a professional way to keep clients and stakeholders up to date on the progress of this active construction project. Drone and FPV footage provided a comprehensive, site-wide perspective that static photos simply couldn't deliver — capturing the full scope of the build in a single update.
+            </p>
           </div>
         </div>
 
-        <div class="portfolio-item" style="height:420px;cursor:pointer;" onclick="playYT(this,'y6YrQZS6DlA')">
-          <img src="https://img.youtube.com/vi/y6YrQZS6DlA/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-          <div class="portfolio-overlay">
-            <div>
-              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Property Tour</p>
-              <p style="font-size:15px;font-weight:800;color:#E8ECF4;">Aloft Hotel</p>
-            </div>
-          </div>
-          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          </div>
-        </div>
-
-        <div class="portfolio-item" style="height:420px;cursor:pointer;" onclick="playYT(this,'soWsWSmpi2U')">
-          <img src="https://img.youtube.com/vi/soWsWSmpi2U/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-          <div class="portfolio-overlay">
-            <div>
-              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Property Tour</p>
-              <p style="font-size:15px;font-weight:800;color:#E8ECF4;">Home2 Suites</p>
-            </div>
-          </div>
-          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          </div>
-        </div>
-
-        <div class="portfolio-item" style="height:420px;cursor:pointer;" onclick="playYT(this,'_V8mftsZc9s')">
-          <img src="https://img.youtube.com/vi/_V8mftsZc9s/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-          <div class="portfolio-overlay">
-            <div>
-              <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Construction Project Update</p>
-              <p style="font-size:15px;font-weight:800;color:#E8ECF4;">SRS Building</p>
-            </div>
-          </div>
-          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          </div>
-        </div>
-
-      </div>
-
-      <div style="text-align:center;margin-top:64px;">
-        <a href="contact.html" class="btn-primary">
-          Get in touch
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </a>
       </div>
     </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="padding:80px 24px;background:#07090E;text-align:center;">
+    <a href="contact.html" class="btn-primary">
+      Book a Shoot
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
   </section>
 
   <footer style="background:#07090E;border-top:1px solid rgba(255,255,255,0.045);padding:32px 24px;">
@@ -345,7 +321,7 @@
         <a href="https://www.instagram.com/flowstate_fpv" class="social-btn" aria-label="Instagram">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5E6E85" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         </a>
-        <a href="mailto:erickflowstatefpv@gmail.com" class="social-btn" aria-label="Email">
+        <a href="mailto:contact@flowstatefpv.media" class="social-btn" aria-label="Email">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5E6E85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
         </a>
       </div>
