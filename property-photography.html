@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -106,7 +106,7 @@
       background: #1E7AAA;
       color: #fff;
       padding: 14px 28px;
-      border-radius: 10px;
+      border-radius: 50px;
       font-family: 'Montserrat', sans-serif;
       font-size: 13px;
       font-weight: 700;
@@ -229,6 +229,26 @@
       transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
     }
     .social-btn:hover { background: rgba(58,195,253,0.15); border-color: rgba(58,195,253,0.3); transform: translateY(-2px); }
+    .portfolio-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
+      background: #0C0F18;
+    }
+    .portfolio-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .portfolio-item:hover img { transform: scale(1.07); }
+    .portfolio-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(7,9,14,0.88) 0%, rgba(7,9,14,0.2) 50%, transparent 100%);
+      display: flex;
+      align-items: flex-end;
+      padding: 22px;
+    }
     @media (max-width: 900px) {
       nav { background: #07090E; }
       .nav-inner { padding: 0 24px; }
@@ -267,11 +287,41 @@
     <div style="max-width:760px;margin:0 auto;position:relative;">
       <div class="section-label" style="margin-bottom:20px;">Services</div>
       <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(40px,6vw,80px);font-weight:900;line-height:1;letter-spacing:0.01em;text-transform:uppercase;margin-bottom:28px;">
-        Property <span class="accent">Photography</span>
+        Standard Drone
       </h1>
       <p style="font-size:17px;color:#5E6E85;line-height:1.8;font-weight:500;max-width:560px;">
-        Professional aerial and ground photography that highlights properties, businesses, and commercial spaces.
+        Professional aerial videography and photography that highlights businesses, real-estate listings, and construction projects.
       </p>
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section style="padding:0 24px 64px;background:#07090E;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid rgba(255,255,255,0.08);">
+
+        <!-- Package 01 -->
+        <div style="padding:32px 32px 32px 0;border-right:1px solid rgba(255,255,255,0.08);">
+          <p style="font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#5E6E85;margin-bottom:14px;">Package 01</p>
+          <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;">Commercial Photos</h3>
+        </div>
+
+        <!-- Package 02 -->
+        <div style="padding:32px;border-right:1px solid rgba(255,255,255,0.08);">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+            <p style="font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#5E6E85;">Package 02</p>
+            <span style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#3AC3FD;border:1px solid #3AC3FD;border-radius:4px;padding:2px 7px;">Most Popular</span>
+          </div>
+          <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;">Commercial Video</h3>
+        </div>
+
+        <!-- Package 03 -->
+        <div style="padding:32px 0 32px 32px;">
+          <p style="font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#5E6E85;margin-bottom:14px;">Package 03</p>
+          <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;">Residential</h3>
+        </div>
+
+      </div>
     </div>
   </section>
 
@@ -282,6 +332,50 @@
         <div class="section-label">Examples</div>
       </div>
       <div style="display:flex;flex-direction:column;gap:72px;">
+
+        <!-- MSIP Site -->
+        <div class="example-row" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
+          <div class="portfolio-item" style="height:360px;cursor:pointer;" onclick="playYT(this,'yKMl6gAdE2A')">
+            <img src="https://img.youtube.com/vi/yKMl6gAdE2A/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+            <div class="portfolio-overlay">
+              <div>
+                <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Construction Project Update</p>
+                <p style="font-size:15px;font-weight:800;color:#E8ECF4;">MSIP Site</p>
+              </div>
+            </div>
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+          </div>
+          <div>
+            <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;margin-bottom:16px;">MSIP Site</h3>
+            <p style="font-size:15px;color:#5E6E85;line-height:1.8;font-weight:500;">
+              A stakeholder construction update for the MSIP Site, capturing the progress and construction infrastructure through drone and FPV footage to provide a comprehensive, site-wide perspective.
+            </p>
+          </div>
+        </div>
+
+        <!-- McAllen City Center -->
+        <div class="example-row" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
+          <div class="portfolio-item" style="height:360px;cursor:pointer;" onclick="playYT(this,'MaPjzCzonK4')">
+            <img src="https://img.youtube.com/vi/MaPjzCzonK4/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+            <div class="portfolio-overlay">
+              <div>
+                <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Construction Project Update</p>
+                <p style="font-size:15px;font-weight:800;color:#E8ECF4;">McAllen City Center</p>
+              </div>
+            </div>
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+          </div>
+          <div>
+            <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;margin-bottom:16px;">McAllen City Center</h3>
+            <p style="font-size:15px;color:#5E6E85;line-height:1.8;font-weight:500;">
+              A stakeholder construction update of the McAllen City Center, capturing the progress and construction infrastructure of the venue.
+            </p>
+          </div>
+        </div>
 
         <!-- South Texas Inspection Program -->
         <div class="example-row" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
@@ -306,32 +400,6 @@
             <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;margin-bottom:16px;">South Texas Inspection Program</h3>
             <p style="font-size:15px;color:#5E6E85;line-height:1.8;font-weight:500;">
               Professional property photography of the South Texas Inspection Program, capturing the entre facility and finshed construction project.
-            </p>
-          </div>
-        </div>
-
-        <!-- OLS Parish Hall -->
-        <div class="example-row" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
-          <div class="carousel" data-carousel="1">
-            <div class="carousel-track">
-              <img src="OLS_Parish_Hall_Photo_Services_Before 6.png" alt="OLS Parish Hall - Before">
-              <img src="OLS_Parish_Hall_Services_2.png" alt="OLS Parish Hall - After">
-              <img src="OLS_Parish_Hall_Services_3.png" alt="OLS Parish Hall">
-            </div>
-            <div class="photo-overlay">
-              <div>
-                <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Construction Project Update</p>
-                <p style="font-size:15px;font-weight:800;color:#E8ECF4;">OLS Parish Hall</p>
-              </div>
-            </div>
-            <button class="carousel-btn carousel-prev" onclick="carouselMove(1,-1)">&#8592;</button>
-            <button class="carousel-btn carousel-next" onclick="carouselMove(1,1)">&#8594;</button>
-            <div class="carousel-dots" id="dots-1"></div>
-          </div>
-          <div>
-            <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;margin-bottom:16px;">OLS Parish Hall</h3>
-            <p style="font-size:15px;color:#5E6E85;line-height:1.8;font-weight:500;">
-              A before-and-after photography series documenting the construction progression of the OLS Parish Hall. This type of coverage gives construction clients and stakeholders a clear, professional record of the progress of a project.
             </p>
           </div>
         </div>
@@ -361,6 +429,7 @@
           </div>
         </div>
 
+
       </div>
     </div>
   </section>
@@ -388,6 +457,12 @@
   </footer>
 
 <script>
+  function playYT(el, id) {
+    el.onclick = null;
+    el.style.cursor = 'default';
+    el.innerHTML = '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+  }
+
   var carouselState = {};
 
   function initCarousels() {

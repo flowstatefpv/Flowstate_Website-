@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -106,7 +106,7 @@
       background: #1E7AAA;
       color: #fff;
       padding: 14px 28px;
-      border-radius: 10px;
+      border-radius: 50px;
       font-family: 'Montserrat', sans-serif;
       font-size: 13px;
       font-weight: 700;
@@ -179,9 +179,35 @@
       transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
     }
     .social-btn:hover { background: rgba(58,195,253,0.15); border-color: rgba(58,195,253,0.3); transform: translateY(-2px); }
+    .shorts-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
+      background: #0C0F18;
+      cursor: pointer;
+      width: 100%;
+      max-width: 320px;
+      aspect-ratio: 9 / 16;
+    }
+    .shorts-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .shorts-card:hover img { transform: scale(1.05); }
+    .shorts-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(7,9,14,0.88) 0%, rgba(7,9,14,0.2) 50%, transparent 100%);
+      display: flex;
+      align-items: flex-end;
+      padding: 22px;
+    }
     @media (max-width: 900px) {
       nav { background: #07090E; }
       .nav-inner { padding: 0 24px; }
+      .shorts-card { max-width: 100%; }
     }
   </style>
 </head>
@@ -217,11 +243,41 @@
     <div style="max-width:760px;margin:0 auto;position:relative;">
       <div class="section-label" style="margin-bottom:20px;">Services</div>
       <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(40px,6vw,80px);font-weight:900;line-height:1;letter-spacing:0.01em;text-transform:uppercase;margin-bottom:28px;">
-        Property <span class="accent">Videography</span>
+        Ground Videography
       </h1>
       <p style="font-size:17px;color:#5E6E85;line-height:1.8;font-weight:500;max-width:560px;">
         High-quality ground and aerial videography designed to showcase spaces, real estate, and brands.
       </p>
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section style="padding:0 24px 64px;background:#07090E;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid rgba(255,255,255,0.08);">
+
+        <!-- Package 01 -->
+        <div style="padding:32px 32px 32px 0;border-right:1px solid rgba(255,255,255,0.08);">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+            <p style="font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#5E6E85;">Package 01</p>
+            <span style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#3AC3FD;border:1px solid #3AC3FD;border-radius:4px;padding:2px 7px;">Most Popular</span>
+          </div>
+          <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;">Event Highlight</h3>
+        </div>
+
+        <!-- Package 02 -->
+        <div style="padding:32px;border-right:1px solid rgba(255,255,255,0.08);">
+          <p style="font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#5E6E85;margin-bottom:14px;">Package 02</p>
+          <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;">Client Testimonial</h3>
+        </div>
+
+        <!-- Package 03 -->
+        <div style="padding:32px 0 32px 32px;">
+          <p style="font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#5E6E85;margin-bottom:14px;">Package 03</p>
+          <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;">Brand Partnership</h3>
+        </div>
+
+      </div>
     </div>
   </section>
 
@@ -233,68 +289,26 @@
       </div>
       <div style="display:flex;flex-direction:column;gap:72px;">
 
-        <!-- McAllen City Center -->
+        <!-- Windy MMA Short-Form Reel -->
         <div class="example-row" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
-          <div class="portfolio-item" style="height:360px;cursor:pointer;" onclick="playYT(this,'SRONrhhDGGc')">
-            <img src="https://img.youtube.com/vi/SRONrhhDGGc/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-            <div class="portfolio-overlay">
-              <div>
-                <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Construction Project Update</p>
-                <p style="font-size:15px;font-weight:800;color:#E8ECF4;">McAllen City Center</p>
+          <div style="display:flex;justify-content:center;">
+            <div class="shorts-card" onclick="playYTShort(this,'OlSYP4A90po')">
+              <img src="https://img.youtube.com/vi/OlSYP4A90po/maxresdefault.jpg" alt="Windy MMA Short-Form Reel">
+              <div class="shorts-overlay">
+                <div>
+                  <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Short-Form Reel</p>
+                  <p style="font-size:15px;font-weight:800;color:#E8ECF4;">Windy MMA — Bryan, TX</p>
+                </div>
               </div>
-            </div>
-            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
             </div>
           </div>
           <div>
-            <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;margin-bottom:16px;">McAllen City Center</h3>
+            <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;margin-bottom:16px;">Windy MMA</h3>
             <p style="font-size:15px;color:#5E6E85;line-height:1.8;font-weight:500;">
-              A stakeholder construction update of the McAllen City Center, capturing the progress and construction infrastructure of the venue.
-            </p>
-          </div>
-        </div>
-
-        <!-- Extended Stay Harlingen -->
-        <div class="example-row" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
-          <div class="portfolio-item" style="height:360px;cursor:pointer;" onclick="playYT(this,'4Ljx5tidpHE')">
-            <img src="https://img.youtube.com/vi/4Ljx5tidpHE/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-            <div class="portfolio-overlay">
-              <div>
-                <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Construction Project Update</p>
-                <p style="font-size:15px;font-weight:800;color:#E8ECF4;">Extended Stay Harlingen</p>
-              </div>
-            </div>
-            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </div>
-          </div>
-          <div>
-            <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;margin-bottom:16px;">Extended Stay Harlingen</h3>
-            <p style="font-size:15px;color:#5E6E85;line-height:1.8;font-weight:500;">
-              A stakeholder construction update for Extended Stay Harlingen, capturing the progress and construction infrastructure of the property throughout the build.
-            </p>
-          </div>
-        </div>
-
-        <!-- OLS Parish Hall -->
-        <div class="example-row" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
-          <div class="portfolio-item" style="height:360px;cursor:pointer;" onclick="playYT(this,'cGZaXGaYq5E')">
-            <img src="https://img.youtube.com/vi/cGZaXGaYq5E/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-            <div class="portfolio-overlay">
-              <div>
-                <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Construction Project Update</p>
-                <p style="font-size:15px;font-weight:800;color:#E8ECF4;">OLS Parish Hall</p>
-              </div>
-            </div>
-            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </div>
-          </div>
-          <div>
-            <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;margin-bottom:16px;">OLS Parish Hall</h3>
-            <p style="font-size:15px;color:#5E6E85;line-height:1.8;font-weight:500;">
-              A stakeholder construction update for OLS Parish Hall, capturing the progress and construction infrastructure. Showcasing a before and after of the concrete slab being placed.
+              Organic short-form content created for Windy MMA, a mixed martial arts gym located in Bryan, TX. Designed to grow their social media presence through authentic, platform-native reels that drive engagement, build community, and keep their audience coming back.
             </p>
           </div>
         </div>
@@ -326,6 +340,11 @@
   </footer>
 
 <script>
+  function playYTShort(el, id) {
+    el.onclick = null;
+    el.style.cursor = 'default';
+    el.innerHTML = '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+  }
   function playYT(el, id) {
     el.onclick = null;
     el.style.cursor = 'default';

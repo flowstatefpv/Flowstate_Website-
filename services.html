@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -114,7 +114,7 @@
       background: #1E7AAA;
       color: #fff;
       padding: 14px 28px;
-      border-radius: 10px;
+      border-radius: 50px;
       font-family: 'Montserrat', sans-serif;
       font-size: 13px;
       font-weight: 700;
@@ -255,8 +255,7 @@
     <div style="max-width:1200px;margin:0 auto;position:relative;">
       <div style="text-align:center;margin-bottom:64px;">
         <div class="section-label" style="justify-content:center;margin-bottom:16px;">What We Do</div>
-        <h2 class="section-h2" style="margin-bottom:18px;">Services Built for <span class="accent">Impact</span></h2>
-        <p style="font-size:16px;color:#5E6E85;line-height:1.75;max-width:440px;margin:0 auto;font-weight:500;">From property showcases to high-speed FPV video, we create content designed to capture attention and convert viewers.</p>
+        <h2 class="section-h2" style="margin-bottom:18px;">Services Built for Impact</h2>
       </div>
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;">
@@ -273,7 +272,7 @@
             </svg>
           </div>
           <h3 style="font-size:19px;font-weight:800;letter-spacing:-0.02em;margin-bottom:12px;">FPV Videography</h3>
-          <p style="font-size:14px;color:#5E6E85;line-height:1.75;font-weight:500;">Immersive FPV drone video that showcases your property, business, or facility through cinematic fly-throughs.<br><br>Ideal for: Hotels, Events, and Commercial Real-Estate.</p>
+          <p style="font-size:14px;color:#5E6E85;line-height:1.75;font-weight:500;">Immersive FPV drone video that showcases your property, business, or facility through cinematic fly-throughs.<br><br>Ideal for: Tours, Events, and Commercial Real-Estate.</p>
           <p style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#3AC3FD;margin-top:20px;">Learn More →</p>
         </div>
 
@@ -284,34 +283,38 @@
               <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/>
             </svg>
           </div>
-          <h3 style="font-size:19px;font-weight:800;letter-spacing:-0.02em;margin-bottom:12px;">Property Videography</h3>
-          <p style="font-size:14px;color:#5E6E85;line-height:1.75;font-weight:500;">High-quality ground and aerial videography designed to showcase spaces and Real-Estate.<br><br>Ideal For: Businesses, Commercial Real-Estate, and Hospitality Brands.</p>
+          <h3 style="font-size:19px;font-weight:800;letter-spacing:-0.02em;margin-bottom:12px;">Ground Videography</h3>
+          <p style="font-size:14px;color:#5E6E85;line-height:1.75;font-weight:500;">High quality ground videography designed to showcase properties and real estate.<br><br>Ideal For: Businesses, Commercial Real-Estate, and Construction Documentation.</p>
           <p style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#3AC3FD;margin-top:20px;">Learn More →</p>
         </div>
 
         <!-- Events -->
-        <div class="service-card" onclick="window.location.href='property-photography.html'" style="cursor:pointer;">
+        <div class="service-card" onclick="window.location.href='property-photography.html'"style="cursor:pointer;">
           <div class="service-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3AC3FD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
+              <rect x="9" y="9" width="6" height="6" rx="1"/>
+              <line x1="9" y1="9" x2="4" y2="4"/><line x1="15" y1="9" x2="20" y2="4"/>
+              <line x1="9" y1="15" x2="4" y2="20"/><line x1="15" y1="15" x2="20" y2="20"/>
+              <circle cx="4" cy="4" r="2"/><circle cx="20" cy="4" r="2"/>
+              <circle cx="4" cy="20" r="2"/><circle cx="20" cy="20" r="2"/>
             </svg>
           </div>
-          <h3 style="font-size:19px;font-weight:800;letter-spacing:-0.02em;margin-bottom:12px;">Property Photography</h3>
-          <p style="font-size:14px;color:#5E6E85;line-height:1.75;font-weight:500;">Professional aerial and ground photography that highlights properties, businesses, and commercial spaces.<br><br>Ideal For: Commercial Real Estate, Construction Projects, and Local Businesses.</p>
+          <h3 style="font-size:19px;font-weight:800;letter-spacing:-0.02em;margin-bottom:12px;">Standard Drone</h3>
+          <p style="font-size:14px;color:#5E6E85;line-height:1.75;font-weight:500;">Professional aerial videography and photography that highlights properties, businesses, and commercial spaces.<br><br>Ideal For: Commercial Real Estate, Construction Projects, and Businesses.</p>
           <p style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#3AC3FD;margin-top:20px;">Learn More →</p>
         </div>
 
-        <!-- Content Packages card — temporarily hidden, uncomment to restore
-        <div class="service-card">
+        <!-- Media Services -->
+        <div class="service-card" onclick="window.location.href='media-services.html'" style="cursor:pointer;">
           <div class="service-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3AC3FD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
             </svg>
           </div>
-          <h3 style="font-size:19px;font-weight:800;letter-spacing:-0.02em;margin-bottom:12px;">Content Packages</h3>
+          <h3 style="font-size:19px;font-weight:800;letter-spacing:-0.02em;margin-bottom:12px;">Media Services</h3>
           <p style="font-size:14px;color:#5E6E85;line-height:1.75;font-weight:500;">Custom bundled media solutions combining photo, video, and drone coverage tailored to your goals.<br><br>Ideal For: Business Marketing, Property Launches, and Social Media Content.</p>
+          <p style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#3AC3FD;margin-top:20px;">Learn More →</p>
         </div>
-        -->
 
       </div>
 

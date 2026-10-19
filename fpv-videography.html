@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -106,7 +106,7 @@
       background: #1E7AAA;
       color: #fff;
       padding: 14px 28px;
-      border-radius: 10px;
+      border-radius: 50px;
       font-family: 'Montserrat', sans-serif;
       font-size: 13px;
       font-weight: 700;
@@ -215,7 +215,7 @@
     <div style="max-width:760px;margin:0 auto;position:relative;">
       <div class="section-label" style="margin-bottom:20px;">Services</div>
       <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(40px,6vw,80px);font-weight:900;line-height:1;letter-spacing:0.01em;text-transform:uppercase;margin-bottom:28px;">
-        FPV <span class="accent">Videography</span>
+        FPV Videography
       </h1>
     </div>
   </section>
@@ -229,6 +229,36 @@
     </div>
   </section>
 
+  <!-- PACKAGES -->
+  <section style="padding:0 24px 64px;background:#07090E;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid rgba(255,255,255,0.08);">
+
+        <!-- Package 01 -->
+        <div style="padding:32px 32px 32px 0;border-right:1px solid rgba(255,255,255,0.08);">
+          <p style="font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#5E6E85;margin-bottom:14px;">Package 01</p>
+          <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;">Essential Tour</h3>
+        </div>
+
+        <!-- Package 02 -->
+        <div style="padding:32px;border-right:1px solid rgba(255,255,255,0.08);">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+            <p style="font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#5E6E85;">Package 02</p>
+            <span style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#3AC3FD;border:1px solid #3AC3FD;border-radius:4px;padding:2px 7px;">Most Popular</span>
+          </div>
+          <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;">Premier Tour</h3>
+        </div>
+
+        <!-- Package 03 -->
+        <div style="padding:32px 0 32px 32px;">
+          <p style="font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#5E6E85;margin-bottom:14px;">Package 03</p>
+          <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;">Luxury Tour</h3>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- EXAMPLES -->
   <section style="padding:0 24px 80px;background:#07090E;">
     <div style="max-width:1200px;margin:0 auto;">
@@ -236,6 +266,28 @@
         <div class="section-label">Examples</div>
       </div>
       <div style="display:flex;flex-direction:column;gap:72px;">
+
+        <!-- OLS Parish Hall -->
+        <div class="example-row" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
+          <div class="portfolio-item" style="height:360px;cursor:pointer;" onclick="playYT(this,'fvuvufiB5Fc')">
+            <img src="https://img.youtube.com/vi/fvuvufiB5Fc/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+            <div class="portfolio-overlay">
+              <div>
+                <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Property Tour</p>
+                <p style="font-size:15px;font-weight:800;color:#E8ECF4;">OLS Parish Hall</p>
+              </div>
+            </div>
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+          </div>
+          <div>
+            <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;margin-bottom:16px;">OLS Parish Hall</h3>
+            <p style="font-size:15px;color:#5E6E85;line-height:1.8;font-weight:500;">
+              A property tour of the OLS Parish Hall, using FPV to capture the full scope of the facility in a single immersive flythrough. The smooth, continuous shot communicates the space, architecture, and atmosphere in a way traditional video can't.
+            </p>
+          </div>
+        </div>
 
         <!-- Embassy Suites -->
         <div class="example-row" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
@@ -281,27 +333,6 @@
           </div>
         </div>
 
-        <!-- SRS Building -->
-        <div class="example-row" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
-          <div class="portfolio-item" style="height:360px;cursor:pointer;" onclick="playYT(this,'_V8mftsZc9s')">
-            <img src="https://img.youtube.com/vi/_V8mftsZc9s/maxresdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-            <div class="portfolio-overlay">
-              <div>
-                <p style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3AC3FD;margin-bottom:4px;">Construction Project Update</p>
-                <p style="font-size:15px;font-weight:800;color:#E8ECF4;">SRS Building</p>
-              </div>
-            </div>
-            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;width:56px;height:56px;border-radius:50%;background:rgba(7,9,14,0.65);border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8ECF4" style="margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </div>
-          </div>
-          <div>
-            <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#E8ECF4;margin-bottom:16px;">SRS Building</h3>
-            <p style="font-size:15px;color:#5E6E85;line-height:1.8;font-weight:500;">
-              Alamo System Industries needed a professional way to keep clients and stakeholders up to date on the progress of this active construction project. Drone and FPV footage provided a comprehensive, site-wide perspective that static photos simply couldn't deliver — capturing the full scope of the build in a single update.
-            </p>
-          </div>
-        </div>
 
       </div>
     </div>
