@@ -208,11 +208,11 @@
 
     /* ── HERO ── */
     .hero-section {
-      min-height: 100vh;
+      height: calc(100vh - 72px);
+      min-height: 480px;
       position: relative;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
       overflow: hidden;
     }
     .glow-blob {
@@ -249,7 +249,7 @@
     /* ── HEADINGS ── */
     .hero-h1 {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: clamp(40px, 6vw, 80px);
+      font-size: clamp(30px, 4.5vw, 60px);
       font-weight: 300;
       line-height: 1.0;
       letter-spacing: 0.01em;
@@ -566,64 +566,64 @@
     <!-- Dim overlay keeps hero text legible -->
     <div style="position:absolute;inset:0;background:rgba(7,9,14,0.45);pointer-events:none;"></div>
 
-    <!-- Content -->
-    <div style="position:relative;z-index:10;text-align:center;padding:0 24px;max-width:880px;margin:0 auto;">
+    <!-- Content — flex-grow fills space and centres text -->
+    <div style="position:relative;z-index:10;flex:1;display:flex;align-items:center;justify-content:center;padding:0 24px;">
+      <div style="text-align:center;max-width:880px;width:100%;">
 
-      <h1 class="hero-h1" style="margin-bottom:16px;color:#E8ECF4;white-space:nowrap;text-align:center;">
-        Flowstate FPV Media
-      </h1>
+        <h1 class="hero-h1" style="margin-bottom:16px;color:#E8ECF4;text-align:center;">
+          Cinematic Drone Tours for your Business
+        </h1>
 
-      <p style="font-size:clamp(17px,2.2vw,22px);color:#E8ECF4;line-height:1.75;margin:0 auto 40px;text-align:center;max-width:560px;">
-        Luxury media that moves your business and builds your brand.
-      </p>
+        <p style="font-size:clamp(14px,1.6vw,17px);color:#E8ECF4;line-height:1.75;margin:0 auto 32px;text-align:center;max-width:500px;">
+          Luxury media that moves your business and builds your brand.
+        </p>
 
-      <!-- CTA Buttons -->
-      <div class="hero-cta" style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;">
-        <a href="services.html" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;background:#1E7AAA;color:#fff;padding:14px 26px;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;box-shadow:0 6px 20px rgba(58,195,253,0.18);transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.25s ease,background 0.2s ease;" onmouseover="this.style.transform='translateY(-2px) scale(1.02)';this.style.background='#2490C8'" onmouseout="this.style.transform='none';this.style.background='#1E7AAA'">
-          Pricing &amp; Packages
-          <span style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.2);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </span>
-        </a>
-        <a href="portfolio.html" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;background:rgba(30,122,170,0.18);color:#E8ECF4;padding:14px 26px;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;border:1px solid rgba(58,195,253,0.35);backdrop-filter:blur(8px);transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1),border-color 0.25s ease,background 0.2s ease;" onmouseover="this.style.transform='translateY(-2px) scale(1.02)';this.style.background='rgba(30,122,170,0.32)';this.style.borderColor='rgba(58,195,253,0.6)'" onmouseout="this.style.transform='none';this.style.background='rgba(30,122,170,0.18)';this.style.borderColor='rgba(58,195,253,0.35)'">
-          Learn More
-          <span style="width:28px;height:28px;border-radius:50%;background:rgba(58,195,253,0.18);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3AC3FD" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════ LOGO CLOUD ═══════════════════════════════════ -->
-  <section style="position:relative;padding:72px 0 56px;background:#07090E;overflow:hidden;">
-
-    <div aria-hidden="true" style="position:absolute;top:-60%;left:50%;transform:translateX(-50%);width:120vmin;height:120vmin;border-radius:0 0 9999px 9999px;background:radial-gradient(ellipse at center,rgba(232,236,244,0.05) 0%,transparent 50%);filter:blur(30px);pointer-events:none;z-index:0;"></div>
-
-    <div class="logo-cloud-outer" style="overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent,black 12%,black 88%,transparent);mask-image:linear-gradient(to right,transparent,black 12%,black 88%,transparent);padding:24px 0;">
-      <div class="logo-cloud-track">
-        <!-- Set 1 -->
-        <img src="brand_assets/logos/cy_logo_reverse.png"                    alt="Courtyard by Marriott"   loading="lazy" class="logo-cloud-img">
-        <img src="brand_assets/logos/aloft-logo-white.png"                   alt="Aloft"                   loading="lazy" class="logo-cloud-img">
-        <img src="brand_assets/logos/FairFieldVanityLogo.png"                alt="Fairfield by Marriott"   loading="lazy" class="logo-cloud-img">
-        <img src="MXET_white_Xwide.png"                                       alt="Texas A&amp;M Engineering"   loading="lazy" class="logo-cloud-img">
-        <img src="brand_assets/logos/Home2-Logo-White_HR.webp" style="height:62px;"               alt="Home2 Suites by Hilton"  loading="lazy" class="logo-cloud-img">
-        <img src="Embassy-Suites-Logo.png" style="height:62px;"                alt="Embassy Suites by Hilton" loading="lazy" class="logo-cloud-img">
-        <img src="brand_assets/logos/McAllen-City-Center-temp-w.png"         alt="McAllen City Center"     loading="lazy" class="logo-cloud-img" style="height:52px;">
-        <img src="brand_assets/logos/Ruby-Red-Logo.png"                      alt="Ruby Red Hospitality"    loading="lazy" class="logo-cloud-img" style="height:52px;">
-        <!-- Set 2 — duplicate for seamless loop -->
-        <img src="brand_assets/logos/cy_logo_reverse.png"                    alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
-        <img src="brand_assets/logos/aloft-logo-white.png"                   alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
-        <img src="brand_assets/logos/FairFieldVanityLogo.png"                alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
-        <img src="MXET_white_Xwide.png"                                       alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
-        <img src="brand_assets/logos/Home2-Logo-White_HR.webp" style="height:52px;" alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
-        <img src="Embassy-Suites-Logo.png" style="height:62px;"              alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
-        <img src="brand_assets/logos/McAllen-City-Center-temp-w.png"         alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
-        <img src="brand_assets/logos/Ruby-Red-Logo.png"                      alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+        <!-- CTA Buttons -->
+        <div class="hero-cta" style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;">
+          <a href="services.html" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;background:#1E7AAA;color:#fff;padding:14px 26px;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;box-shadow:0 6px 20px rgba(58,195,253,0.18);transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.25s ease,background 0.2s ease;" onmouseover="this.style.transform='translateY(-2px) scale(1.02)';this.style.background='#2490C8'" onmouseout="this.style.transform='none';this.style.background='#1E7AAA'">
+            Pricing &amp; Packages
+            <span style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.2);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </a>
+          <a href="portfolio.html" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;background:rgba(30,122,170,0.18);color:#E8ECF4;padding:14px 26px;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;border:1px solid rgba(58,195,253,0.35);backdrop-filter:blur(8px);transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1),border-color 0.25s ease,background 0.2s ease;" onmouseover="this.style.transform='translateY(-2px) scale(1.02)';this.style.background='rgba(30,122,170,0.32)';this.style.borderColor='rgba(58,195,253,0.6)'" onmouseout="this.style.transform='none';this.style.background='rgba(30,122,170,0.18)';this.style.borderColor='rgba(58,195,253,0.35)'">
+            Learn More
+            <span style="width:28px;height:28px;border-radius:50%;background:rgba(58,195,253,0.18);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3AC3FD" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </a>
+        </div>
       </div>
     </div>
 
-    <div style="height:1px;background:rgba(255,255,255,0.08);-webkit-mask-image:linear-gradient(to right,transparent,black,transparent);mask-image:linear-gradient(to right,transparent,black,transparent);"></div>
+    <!-- Logo ribbon — flex child pinned to bottom -->
+    <div style="position:relative;z-index:10;width:100%;">
+      <div style="height:64px;background:linear-gradient(to bottom,transparent,rgba(7,9,14,0.88));pointer-events:none;"></div>
+      <div style="background:rgba(7,9,14,0.88);backdrop-filter:blur(6px);">
+        <div class="logo-cloud-outer" style="overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent,black 12%,black 88%,transparent);mask-image:linear-gradient(to right,transparent,black 12%,black 88%,transparent);padding:18px 0;">
+          <div class="logo-cloud-track">
+            <!-- Set 1 -->
+            <img src="brand_assets/logos/cy_logo_reverse.png"                    alt="Courtyard by Marriott"   loading="lazy" class="logo-cloud-img">
+            <img src="brand_assets/logos/aloft-logo-white.png"                   alt="Aloft"                   loading="lazy" class="logo-cloud-img">
+            <img src="brand_assets/logos/FairFieldVanityLogo.png"                alt="Fairfield by Marriott"   loading="lazy" class="logo-cloud-img">
+            <img src="MXET_white_Xwide.png"                                       alt="Texas A&amp;M Engineering"   loading="lazy" class="logo-cloud-img">
+            <img src="brand_assets/logos/Home2-Logo-White_HR.webp" style="height:62px;"               alt="Home2 Suites by Hilton"  loading="lazy" class="logo-cloud-img">
+            <img src="Embassy-Suites-Logo.png" style="height:62px;filter:invert(1) !important;"                alt="Embassy Suites by Hilton" loading="lazy" class="logo-cloud-img">
+            <img src="brand_assets/logos/McAllen-City-Center-temp-w.png"         alt="McAllen City Center"     loading="lazy" class="logo-cloud-img" style="height:52px;">
+            <img src="brand_assets/logos/Ruby-Red-Logo.png"                      alt="Ruby Red Hospitality"    loading="lazy" class="logo-cloud-img" style="height:52px;">
+            <!-- Set 2 — duplicate for seamless loop -->
+            <img src="brand_assets/logos/cy_logo_reverse.png"                    alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+            <img src="brand_assets/logos/aloft-logo-white.png"                   alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+            <img src="brand_assets/logos/FairFieldVanityLogo.png"                alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+            <img src="MXET_white_Xwide.png"                                       alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+            <img src="brand_assets/logos/Home2-Logo-White_HR.webp" style="height:52px;" alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+            <img src="Embassy-Suites-Logo.png" style="height:62px;filter:invert(1) !important;"              alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+            <img src="brand_assets/logos/McAllen-City-Center-temp-w.png"         alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+            <img src="brand_assets/logos/Ruby-Red-Logo.png"                      alt="" aria-hidden="true" loading="lazy" class="logo-cloud-img">
+          </div>
+        </div>
+      </div>
+    </div>
 
   </section>
 
