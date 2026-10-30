@@ -3,6 +3,10 @@
 # Keep the hero background video (92MB, under GitHub's 100MB limit)
 !reel_compressed_cut_shorter.mp4
 
+# Original high-res photo folders — web-optimized WebP copies are in images/
+Harlingen_Website_Photos/
+Windy_MMA_Photos/
+
 # Dev/screenshot artifacts
 temporary screenshots/
 screenshot.mjs
